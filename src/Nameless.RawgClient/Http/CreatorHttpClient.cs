@@ -4,7 +4,7 @@
             var result = await GetResultAsync<Paginable<Creator>>(Endpoints.Creators.GetCreators, request, cancellationToken);
 
             return result.Match(
-                success => success.CreateResponse<GetCreatorsRequest, GetCreatorsResponse>(request),
+                success => success.CreateResponse<GetCreatorsResponse>(request),
                 error => new GetCreatorsResponse { Error = error.Reason }
             );
         }
@@ -14,7 +14,7 @@
             var result = await GetResultAsync<Creator>(endpoint, request, cancellationToken);
 
             return result.Match(
-                success => new GetCreatorDetailsResponse { Result = success },
+                success => new GetCreatorDetailsResponse { Results = [success] },
                 error => new GetCreatorDetailsResponse { Error = error.Reason }
             );
         }

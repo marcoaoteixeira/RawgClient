@@ -6,7 +6,7 @@
                                                                       cancellationToken);
 
             return result.Match(
-                success => success.CreateResponse<GetCreatorRolesRequest, GetCreatorRolesResponse>(request),
+                success => success.CreateResponse<GetCreatorRolesResponse>(request),
                 error => new GetCreatorRolesResponse { Error = error.Reason }
             );
         }

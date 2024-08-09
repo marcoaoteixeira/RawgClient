@@ -4,9 +4,9 @@
             var result = await GetResultAsync<Paginable<Genre>>(Endpoints.Genres.GetGenres,
                                                                 request,
                                                                 cancellationToken);
-
+            
             return result.Match(
-                success => success.CreateResponse<GetGenresRequest, GetGenresResponse>(request),
+                success => success.CreateResponse<GetGenresResponse>(request),
                 error => new GetGenresResponse { Error = error.Reason }
             );
         }
@@ -16,7 +16,7 @@
             var result = await GetResultAsync<Genre>(endpoint, request, cancellationToken);
 
             return result.Match(
-                success => new GetGenreDetailsResponse { Result = success },
+                success => new GetGenreDetailsResponse { Results = [success]},
                 error => new GetGenreDetailsResponse { Error = error.Reason }
             );
         }

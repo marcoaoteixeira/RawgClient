@@ -14,9 +14,9 @@ namespace Nameless.RawgClient.Http {
             Assert.Multiple(() => {
                 Assert.That(response, Is.Not.Null);
                 Assert.That(response.Succeeded, Is.True, message: response.Error);
-                Assert.That(response.Result, Is.Not.Empty);
+                Assert.That(response.Results, Is.Not.Empty);
 
-                var first = response.Result!.First();
+                var first = response.Results.First();
                 Assert.That(first.Name, Is.Not.Empty);
             });
         }

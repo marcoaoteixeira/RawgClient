@@ -5,6 +5,5 @@ namespace Nameless.RawgClient.Contracts.Http.Developers.Responses {
     /// <summary>
     /// Represents the response for a developer's details.
     /// </summary>
-    public sealed record GetDeveloperDetailsResponse : Response<Developer> {
-    }
+    public sealed record GetDeveloperDetailsResponse : Response<Developer>;
 }

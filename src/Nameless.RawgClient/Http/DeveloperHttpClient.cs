@@ -6,7 +6,7 @@
                                                                     cancellationToken);
 
             return result.Match(
-                success => success.CreateResponse<GetDevelopersRequest, GetDevelopersResponse>(request),
+                success => success.CreateResponse<GetDevelopersResponse>(request),
                 error => new GetDevelopersResponse { Error = error.Reason }
             );
         }
@@ -18,7 +18,7 @@
                                                          cancellationToken: cancellationToken);
 
             return result.Match(
-                success => new GetDeveloperDetailsResponse { Result = success },
+                success => new GetDeveloperDetailsResponse { Results = [success] },
                 error => new GetDeveloperDetailsResponse { Error = error.Reason }
             );
         }

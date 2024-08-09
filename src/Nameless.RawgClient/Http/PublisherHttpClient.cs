@@ -6,7 +6,7 @@
                                                                     cancellationToken);
 
             return result.Match(
-                success => success.CreateResponse<GetPublishersRequest, GetPublishersResponse>(request),
+                success => success.CreateResponse<GetPublishersResponse>(request),
                 error => new GetPublishersResponse { Error = error.Reason }
             );
         }
@@ -16,7 +16,7 @@
             var result = await GetResultAsync<Publisher>(endpoint, request, cancellationToken);
 
             return result.Match(
-                success => new GetPublisherDetailsResponse { Result = success },
+                success => new GetPublisherDetailsResponse { Results = [success] },
                 error => new GetPublisherDetailsResponse { Error = error.Reason }
             );
         }

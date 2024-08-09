@@ -32,9 +32,8 @@ namespace Nameless.RawgClient.Common {
         [JsonProperty("results")]
         internal TResult[] Results { get; set; } = [];
 
-        internal TResponse CreateResponse<TRequest, TResponse>(TRequest request)
-            where TRequest : PaginableRequest
-            where TResponse : PaginableResponse<TRequest, TResult>, new()
+        internal TResponse CreateResponse<TResponse>(PaginableRequest request)
+            where TResponse : PaginableResponse<TResult>, new()
             => new() {
                 Count = Count,
                 Previous = PreviousQuery is not null
@@ -43,7 +42,7 @@ namespace Nameless.RawgClient.Common {
                 Next = NextQuery is not null
                     ? request with { PageNumber = request.PageNumber + 1 }
                     : null,
-                Result = Results
+                Results = Results
             };
     }
 }

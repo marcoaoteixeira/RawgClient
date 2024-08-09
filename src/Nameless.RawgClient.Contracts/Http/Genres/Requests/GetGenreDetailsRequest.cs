@@ -1,13 +1,10 @@
 ﻿using Nameless.RawgClient.Contracts.Common;
+using Newtonsoft.Json;
 
 namespace Nameless.RawgClient.Contracts.Http.Genres.Requests {
     /// <summary>
     /// Represents a request object for genre's details.
     /// </summary>
-    public sealed record GetGenreDetailsRequest : Request {
-        /// <summary>
-        /// Gets or init the genre's identifier.
-        /// </summary>
-        public int Id { get; init; }
-    }
+    /// <param name="Id">Gets or init the genre's identifier.</param>
+    public sealed record GetGenreDetailsRequest([property: JsonProperty("id")] int Id) : Request;
 }

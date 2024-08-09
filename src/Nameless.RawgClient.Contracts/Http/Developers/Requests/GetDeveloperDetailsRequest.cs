@@ -1,13 +1,10 @@
 ﻿using Nameless.RawgClient.Contracts.Common;
+using Newtonsoft.Json;
 
 namespace Nameless.RawgClient.Contracts.Http.Developers.Requests {
     /// <summary>
     /// Represents a request object for developer's details.
     /// </summary>
-    public sealed record GetDeveloperDetailsRequest : Request {
-        /// <summary>
-        /// Gets or init the developer's identifier.
-        /// </summary>
-        public int Id { get; init; }
-    }
+    /// <param name="Id">The developer identifier.</param>
+    public sealed record GetDeveloperDetailsRequest([property: JsonProperty("id")] int Id) : Request;
 }

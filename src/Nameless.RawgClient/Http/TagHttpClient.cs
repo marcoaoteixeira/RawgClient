@@ -6,7 +6,7 @@
                                                               cancellationToken);
 
             return result.Match(
-                success => success.CreateResponse<GetTagsRequest, GetTagsResponse>(request),
+                success => success.CreateResponse<GetTagsResponse>(request),
                 error => new GetTagsResponse { Error = error.Reason }
             );
         }
@@ -16,7 +16,7 @@
             var result = await GetResultAsync<Tag>(endpoint, request, cancellationToken);
 
             return result.Match(
-                success => new GetTagDetailsResponse { Result = success },
+                success => new GetTagDetailsResponse { Results = [success] },
                 error => new GetTagDetailsResponse { Error = error.Reason }
             );
         }
