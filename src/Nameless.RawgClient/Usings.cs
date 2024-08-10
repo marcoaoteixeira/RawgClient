@@ -21,7 +21,6 @@ global using Nameless.RawgClient.Contracts.Http.Tags.Requests;
 global using Nameless.RawgClient.Contracts.Http.Tags.Responses;
 global using Nameless.RawgClient.Contracts.Objects;
 global using Nameless.RawgClient.Common;
-global using Nameless.RawgClient.Helpers;
 global using Nameless.RawgClient.Infrastructure;
 
 #if NET8_0_OR_GREATER

@@ -53,5 +53,15 @@
             internal const string GetTagDetails = "/api/tags/{0}";
 #endif
         }
+
+        internal static class Stores {
+            internal const string GetStores = "/api/stores";
+
+#if NET8_0_OR_GREATER
+            internal static readonly CompositeFormat GetStoreDetails = CompositeFormat.Parse("/api/stores/{0}");
+#else
+            internal const string GetStoreDetails = "/api/stores/{0}";
+#endif
+        }
     }
 }

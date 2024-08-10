@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Nameless.RawgClient.Http;
 using Nameless.RawgClient.Options;
 
@@ -23,24 +23,26 @@ namespace Nameless.RawgClient {
 
             self.AddKeyedScoped(
                 serviceKey: RawgHttpClientKey,
-                implementationFactory: (provider, key) => {
+                implementationFactory: (provider, _) => {
                     var httpClient = provider.GetRequiredService<IHttpClientFactory>()
                                              .CreateClient(RawgHttpClientKey);
                     var logger = GetLogger<RawgHttpClient>(provider);
-                    var options = provider.GetRequiredService<IConfiguration>()
-                                          .GetSection(nameof(RawgOptions))
-                                          .Get<RawgOptions>() ?? RawgOptions.Default;
+                    var options = provider.GetService<IOptions<RawgOptions>>();
 
-                    ConfigureHttpClient(configure, options, httpClient);
+                    ConfigureHttpClient(configure: configure,
+                                        options: options?.Value ?? RawgOptions.Default,
+                                        httpClient: httpClient);
 
                     return new RawgHttpClient(httpClient, logger);
                 });
 
             self
-                .AddScoped<ICreatorRoleHttpClient>(ResolveRawgHttpClient)
                 .AddScoped<ICreatorHttpClient>(ResolveRawgHttpClient)
+                .AddScoped<ICreatorRoleHttpClient>(ResolveRawgHttpClient)
                 .AddScoped<IDeveloperHttpClient>(ResolveRawgHttpClient)
-                .AddScoped<IGenreHttpClient>(ResolveRawgHttpClient);
+                .AddScoped<IGenreHttpClient>(ResolveRawgHttpClient)
+                .AddScoped<IPublisherHttpClient>(ResolveRawgHttpClient)
+                .AddScoped<ITagHttpClient>(ResolveRawgHttpClient);
 
             return self;
         }
