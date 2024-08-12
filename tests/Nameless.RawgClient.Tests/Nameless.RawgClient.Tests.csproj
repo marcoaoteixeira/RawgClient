@@ -18,6 +18,8 @@
 	  <None Remove="Resources\get-creators.json" />
 	  <None Remove="Resources\get-developer-details.json" />
 	  <None Remove="Resources\get-developers.json" />
+	  <None Remove="Resources\get-game-details.json" />
+	  <None Remove="Resources\get-games.json" />
 	  <None Remove="Resources\get-genre-details.json" />
 	  <None Remove="Resources\get-genres.json" />
 	  <None Remove="Resources\get-parent-platforms.json" />
@@ -45,6 +47,12 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="Resources\get-developers.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Resources\get-game-details.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Resources\get-games.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="Resources\get-genre-details.json">

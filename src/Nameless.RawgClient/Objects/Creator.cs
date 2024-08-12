@@ -73,7 +73,7 @@
         /// Gets or init the creator's works platform.
         /// </summary>
         [JsonProperty("platforms")]
-        public PlatformRoot Platforms { get; init; } = new();
+        public CreatorPlatformRoot Platforms { get; init; } = new();
 
         /// <summary>
         /// Gets or init the creator's positions.

@@ -1,8 +1,8 @@
 ﻿namespace Nameless.RawgClient.Objects {
     /// <summary>
-    /// Platform (collection) item object.
+    /// Creator platform object.
     /// </summary>
-    public record PlatformItem {
+    public record CreatorPlatform {
         /// <summary>
         /// Gets the count.
         /// </summary>
@@ -18,7 +18,7 @@
         /// <summary>
         /// Gets the platform.
         /// </summary>
-        [JsonProperty("platform")]
-        public Platform Platform { get; init; } = new();
+        [JsonProperty("platform", NullValueHandling = NullValueHandling.Ignore)]
+        public CreatorPlatformDescription? Platform { get; init; }
     }
 }

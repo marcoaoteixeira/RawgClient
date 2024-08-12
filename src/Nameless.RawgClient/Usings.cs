@@ -9,6 +9,7 @@ global using Nameless.RawgClient.Domains.CreatorRoles.Requests;
 global using Nameless.RawgClient.Domains.CreatorRoles.Responses;
 global using Nameless.RawgClient.Domains.Creators.Responses;
 global using Nameless.RawgClient.Domains.Developers.Responses;
+global using Nameless.RawgClient.Domains.Games.Responses;
 global using Nameless.RawgClient.Domains.Genres.Responses;
 global using Nameless.RawgClient.Domains.Platforms.Responses;
 global using Nameless.RawgClient.Domains.Publishers.Responses;

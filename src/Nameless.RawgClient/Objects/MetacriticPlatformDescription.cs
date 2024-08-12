@@ -1,0 +1,12 @@
+﻿namespace Nameless.RawgClient.Objects {
+    public record MetacriticPlatformDescription {
+        [JsonProperty("platform")]
+        public int Platform { get; init; }
+
+        [JsonProperty("name")]
+        public string Name { get; init; } = string.Empty;
+
+        [JsonProperty("slug")]
+        public string Slug { get; init; } = string.Empty;
+    }
+}

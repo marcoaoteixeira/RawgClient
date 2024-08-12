@@ -34,7 +34,7 @@ namespace Nameless.RawgClient {
         private static Mock<IEndpointProvider> CreateEndpointProviderMock() {
             var endpointProviderMock = new Mock<IEndpointProvider>();
             endpointProviderMock.Setup(mock => mock.GetEndpoint(It.IsAny<Request>()))
-                                .Returns("this-is-a-fake-endpoint");
+                                .Returns("fake-endpoint");
             return endpointProviderMock;
         }
     }
