@@ -1,6 +1,8 @@
-﻿namespace Nameless.RawgClient.Infrastructure {
+﻿using Nameless.RawgClient.Common;
+
+namespace Nameless.RawgClient.Infrastructure {
     /// <summary>
-    /// Provides methods to retrieve an endpoint based in a request object.
+    /// Contract to provide means to retrieve an endpoint based on its request object.
     /// </summary>
     public interface IEndpointProvider {
         /// <summary>

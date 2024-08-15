@@ -1,4 +1,6 @@
-﻿namespace Nameless.RawgClient {
+﻿using Nameless.RawgClient.Common;
+
+namespace Nameless.RawgClient {
     /// <summary>
     /// Defines the method responsible for querying RAWG API games database.
     /// </summary>

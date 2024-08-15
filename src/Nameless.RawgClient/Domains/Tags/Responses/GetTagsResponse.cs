@@ -1,6 +1,9 @@
-﻿namespace Nameless.RawgClient.Domains.Tags.Responses {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Tags.Objects;
+
+namespace Nameless.RawgClient.Domains.Tags.Responses {
     /// <summary>
-    /// Represents the response for a list of tags.
+    /// Response for a list of tags.
     /// </summary>
     public sealed record GetTagsResponse
         : Response<Tag>;

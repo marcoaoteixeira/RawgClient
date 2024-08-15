@@ -1,6 +1,9 @@
-﻿namespace Nameless.RawgClient.Domains.Developers.Responses {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Developers.Objects;
+
+namespace Nameless.RawgClient.Domains.Developers.Responses {
     /// <summary>
-    /// Represents the response for a list of developers.
+    /// Response for a list of developers.
     /// </summary>
     public sealed record GetDevelopersResponse : Response<Developer>;
 }

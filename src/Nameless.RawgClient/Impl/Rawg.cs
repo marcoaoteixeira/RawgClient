@@ -1,4 +1,10 @@
-﻿namespace Nameless.RawgClient.Impl {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Infrastructure;
+
+namespace Nameless.RawgClient.Impl {
+    /// <summary>
+    /// Current implementation of <see cref="IRawg"/>.
+    /// </summary>
     public sealed class Rawg : IRawg {
         private static readonly Action<ILogger, string, Exception?> ErrorLoggerHandler = LoggerMessage.Define<string>(
             logLevel: LogLevel.Error,
@@ -12,17 +18,34 @@
         private readonly ILogger<Rawg> _logger;
         private readonly Uri _baseUri;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="Rawg"/>.
+        /// </summary>
+        /// <param name="httpClient">The HTTP client.</param>
+        /// <param name="endpointProvider">The endpoint provider.</param>
+        /// <param name="logger">The logger.</param>
+        /// <exception cref="ArgumentNullException">if
+        /// <paramref name="httpClient"/> or
+        /// <paramref name="endpointProvider"/> or
+        /// <paramref name="logger"/> or
+        /// value of <see cref="HttpClient.BaseAddress"/> is <c>null</c>.
+        /// </exception>
         public Rawg(HttpClient httpClient, IEndpointProvider endpointProvider, ILogger<Rawg> logger) {
-            _httpClient = Prevent.Null(httpClient, nameof(httpClient));
-            _endpointProvider = Prevent.Null(endpointProvider, nameof(endpointProvider));
-            _logger = Prevent.Null(logger, nameof(logger));
-            _baseUri = Prevent.Null(_httpClient.BaseAddress, nameof(HttpClient.BaseAddress));
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _endpointProvider = endpointProvider ?? throw new ArgumentNullException(nameof(endpointProvider));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            if (_httpClient.BaseAddress is null) {
+                throw new ArgumentNullException(nameof(HttpClient.BaseAddress), "HttpClient base address should be provided.");
+            }
+            _baseUri = new Uri(_httpClient.BaseAddress.AbsolutePath);
         }
 
+        /// <inheritdoc />
         public async Task<TResponse> QueryAsync<TResponse, TResult>(Request<TResponse, TResult> request, CancellationToken cancellationToken)
             where TResponse : Response<TResult>, new()
             where TResult : class {
-            Prevent.Null(request, nameof(request));
+            if (request is null) { throw new ArgumentNullException(nameof(request)); }
 
             // GetEndpoint endpoint based on request sent.
             var endpoint = _endpointProvider.GetEndpoint(request);
@@ -38,12 +61,12 @@
             }
             catch (Exception ex) {
                 ErrorLoggerHandler(_logger, "Error while calling API through HTTP client.", ex);
-                return Error<TResponse, TResult>("Call to RAWG API failed. See log files for more information.");
+                return CreateErrorResponse<TResponse, TResult>("Call to RAWG API failed. See log files for more information.");
             }
 
             // If return anything other than success, let's return the response with an error message.
             if (!httpResponseMessage.IsSuccessStatusCode) {
-                return Error<TResponse, TResult>(httpResponseMessage.ReasonPhrase ?? httpResponseMessage.StatusCode.ToString());
+                return CreateErrorResponse<TResponse, TResult>(httpResponseMessage.ReasonPhrase ?? httpResponseMessage.StatusCode.ToString());
             }
 
             // Extract the HTTP response content
@@ -51,20 +74,20 @@
                 .ConfigureAwait(continueOnCapturedContext: false);
 
             // Now, let's try to get a JObject from the content extracted.
-            JToken? token;
+            JObject? obj;
             try {
-                token = JsonConvert.DeserializeObject<JToken>(content);
-                if (token is null) {
-                    return Error<TResponse, TResult>("Unable to proper deserialize JSON response.");
+                obj = JsonConvert.DeserializeObject<JObject>(content);
+                if (obj is null) {
+                    return CreateErrorResponse<TResponse, TResult>("Unable to proper deserialize JSON response.");
                 }
             }
             catch (Exception ex) {
                 ErrorLoggerHandler(_logger, $"Error while deserializing JSON to response ({typeof(TResponse)}).", ex);
-                return Error<TResponse, TResult>($"Error while deserializing JSON to response ({typeof(TResponse)}). See log files for more information.");
+                return CreateErrorResponse<TResponse, TResult>($"Error while deserializing JSON to response ({typeof(TResponse)}). See log files for more information.");
             }
 
             // Finally, return response.
-            return CreateResponse(token, request);
+            return CreateResponse(obj, request);
         }
 
         private static string CreateRequestUri(Uri baseUri, string endpoint, Request request) {
@@ -82,65 +105,65 @@
         // ReSharper disable once UnusedParameter.Local
         private static async Task<string> ExtractHttpMessageContentAsync(HttpResponseMessage response, CancellationToken cancellationToken) {
             var json = await response.Content
-#if NET6_0_OR_GREATER
                                      .ReadAsStringAsync(cancellationToken)
-#elif NETSTANDARD2_1
-                                     .ReadAsStringAsync()
-#endif
                                      .ConfigureAwait(continueOnCapturedContext: false);
             return json;
         }
 
-        private static TResponse Error<TResponse, TResult>(string message)
+        private static TResponse CreateErrorResponse<TResponse, TResult>(string message)
             where TResponse : Response<TResult>, new()
             where TResult : class
             => new() { Error = message };
 
-        private static TResponse CreateResponse<TResponse, TResult>(JToken token, Request<TResponse, TResult> request)
+        private static TResponse CreateResponse<TResponse, TResult>(JObject obj, Request<TResponse, TResult> request)
             where TResponse : Response<TResult>, new()
             where TResult : class {
-            return IsPaginable(token)
-                ? CreateResponseFromPaginable(token, request)
-                : CreateResponseFromSingleItem<TResponse, TResult>(token);
+            try {
+                var count = obj.TryGetValue("count", out var countToken)
+                        ? countToken.ToObject<int>()
+                        : 0;
 
-            static bool IsPaginable(JToken token)
-                => token is JObject obj &&
-                   obj.ContainsKey("count") &&
-                   obj.ContainsKey("results");
-        }
+                var previous = obj.TryGetValue("previous", out var previousToken)
+                    ? previousToken.ToObject<string>()
+                    : null;
 
-        private static TResponse CreateResponseFromPaginable<TResponse, TResult>(JToken token, Request<TResponse, TResult> request)
-            where TResponse : Response<TResult>, new()
-            where TResult : class {
-            var paginable = token.ToObject<Paginable<TResult>>();
-            if (paginable is null) {
-                return Error<TResponse, TResult>("Unable to proper deserialize JSON response.");
+                var next = obj.TryGetValue("next", out var nextToken)
+                    ? nextToken.ToObject<string>()
+                    : null;
+
+                TResult[] results;
+                if (!obj.TryGetValue("results", out var resultsToken)) {
+                    // If it doesn't contain the key "results", it means it's just one item.
+                    // This unique item will reside in the root object.
+                    var item = obj.ToObject<TResult>();
+                    results = item is not null ? [item] : [];
+
+                    // Update count property
+                    count = results.Length;
+                }
+                else {
+                    // If it contains the key "results", it means that this is a page of items.
+                    // We'll leave count unchanged because the count value represents
+                    // the total number of possible results for this query.
+                    results = resultsToken.ToObject<TResult[]>() ?? [];
+                }
+
+                return new TResponse {
+                    Count = count,
+                    Results = results,
+
+                    // nice feature of record object, "with" keyword.
+                    Previous = previous is not null
+                        ? request with { PageNumber = request.PageNumber - 1 }
+                        : null,
+                    Next = next is not null
+                        ? request with { PageNumber = request.PageNumber + 1 }
+                        : null
+                };
             }
-
-            return new TResponse {
-                Count = paginable.Count,
-                Results = paginable.Results,
-                Previous = paginable.PreviousQuery is not null
-                    ? request with { PageNumber = request.PageNumber - 1 }
-                    : null,
-                Next = paginable.NextQuery is not null
-                    ? request with { PageNumber = request.PageNumber + 1 }
-                    : null
-            };
-        }
-
-        private static TResponse CreateResponseFromSingleItem<TResponse, TResult>(JToken token)
-            where TResponse : Response<TResult>, new()
-            where TResult : class {
-            var single = token.ToObject<TResult>();
-            if (single is null) {
-                return Error<TResponse, TResult>("Unable to proper deserialize JSON response.");
+            catch (Exception ex) {
+                return CreateErrorResponse<TResponse, TResult>($"Error while creating response. {ex.Message}");
             }
-
-            return new TResponse {
-                Count = 1,
-                Results = [single]
-            };
         }
     }
 }

@@ -18,7 +18,32 @@ namespace Nameless.RawgClient.Infrastructure {
         [Test]
         public void GetEndpoint_Should_Return_Correct_Endpoints_For_Requests() {
             // arrange
-            var expected = new Dictionary<MemberInfo, string> {
+            var expected = CreateExpectedResult();
+            var requestImplementations = GetRequestImplementations();
+            var sut = new EndpointProvider();
+
+            // act
+            var actual = new Dictionary<MemberInfo, string>();
+            
+            foreach (var requestType in requestImplementations) {
+                var request = CreateRequestInstance(requestType);
+                var endpoint = sut.GetEndpoint(request);
+
+                actual[requestType] = endpoint;
+            }
+
+            // assert
+            Assert.That(actual, Is.EquivalentTo(expected));
+        }
+
+        private static IEnumerable<Type> GetRequestImplementations()
+            => typeof(IEndpointProvider).Assembly
+                                        .GetExportedTypes()
+                                        .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                                                       typeof(Request).IsAssignableFrom(type));
+
+        private static Dictionary<MemberInfo, string> CreateExpectedResult() {
+            return new Dictionary<MemberInfo, string> {
                 { typeof(GetCreatorRolesRequest), Endpoints.CreatorRoles.GetCreatorRoles },
                 { typeof(GetCreatorsRequest), Endpoints.Creators.GetCreators },
                 { typeof(GetCreatorDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Creators.GetCreatorDetails, DefaultId) },
@@ -36,19 +61,6 @@ namespace Nameless.RawgClient.Infrastructure {
                 { typeof(GetTagsRequest), Endpoints.Tags.GetTags },
                 { typeof(GetTagDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Tags.GetTagDetails, DefaultId) },
             };
-            var sut = new EndpointProvider();
-
-            // act
-            var actual = new Dictionary<MemberInfo, string>();
-            foreach (var requestType in expected.Keys) {
-                var request = CreateRequestInstance(requestType);
-                var endpoint = sut.GetEndpoint(request);
-
-                actual[requestType] = endpoint;
-            }
-
-            // assert
-            Assert.That(actual, Is.EquivalentTo(expected));
         }
 
         private static Request CreateRequestInstance(MemberInfo requestType) {
@@ -69,7 +81,7 @@ namespace Nameless.RawgClient.Infrastructure {
                 nameof(GetStoreDetailsRequest) => new GetStoreDetailsRequest(DefaultId),
                 nameof(GetTagsRequest) => new GetTagsRequest(),
                 nameof(GetTagDetailsRequest) => new GetTagDetailsRequest(DefaultId),
-                _ => throw new InvalidOperationException($"Missing request type {requestType.Name}")
+                _ => throw new InvalidOperationException($"Missing instantiation logic for request {requestType.Name}")
             };
         }
     }

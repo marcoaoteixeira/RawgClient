@@ -4,11 +4,6 @@
     /// </summary>
     public sealed record RawgOptions {
         /// <summary>
-        /// Returns a default instance of <see cref="RawgOptions"/>.
-        /// </summary>
-        public static RawgOptions Default => new();
-
-        /// <summary>
         /// Gets or sets the API key.
         /// </summary>
         public string ApiKey { get; set; } = string.Empty;

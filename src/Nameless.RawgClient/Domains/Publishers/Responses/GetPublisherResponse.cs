@@ -1,6 +1,9 @@
-﻿namespace Nameless.RawgClient.Domains.Publishers.Responses {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Publishers.Objects;
+
+namespace Nameless.RawgClient.Domains.Publishers.Responses {
     /// <summary>
-    /// Represents the response for a list of publishers.
+    /// Response for a list of publishers.
     /// </summary>
     public sealed record GetPublishersResponse
         : Response<Publisher>;

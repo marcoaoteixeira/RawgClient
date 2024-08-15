@@ -1,4 +1,8 @@
 ﻿namespace Nameless.RawgClient.Common {
+    /// <summary>
+    /// Defines a base generic response object.
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
     public abstract record Response<TResult> : Response
         where TResult : class {
         /// <summary>
@@ -10,19 +14,19 @@
         /// <summary>
         /// Gets or init the previous request object.
         /// </summary>
-        [JsonProperty("previous", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("previous")]
         public Request? Previous { get; init; }
 
         /// <summary>
         /// Gets or init the next request object.
         /// </summary>
-        [JsonProperty("next", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("next")]
         public Request? Next { get; init; }
 
         /// <summary>
         /// Gets or init the count number of available results.
         /// </summary>
-        [JsonProperty("count", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("count")]
         public int? Count { get; init; }
     }
 }

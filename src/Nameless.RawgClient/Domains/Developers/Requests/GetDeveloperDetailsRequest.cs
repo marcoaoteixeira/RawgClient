@@ -1,8 +1,12 @@
-﻿namespace Nameless.RawgClient.Domains.Developers.Requests {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Developers.Objects;
+using Nameless.RawgClient.Domains.Developers.Responses;
+
+namespace Nameless.RawgClient.Domains.Developers.Requests {
     /// <summary>
-    /// Represents a request object for developer's details.
+    /// Request for developer's details.
     /// </summary>
-    /// <param name="Id">The developer identifier.</param>
+    /// <param name="Id">The developer's identifier.</param>
     public sealed record GetDeveloperDetailsRequest([property: JsonProperty("id")] int Id)
         : Request<GetDeveloperDetailsResponse, Developer>;
 }

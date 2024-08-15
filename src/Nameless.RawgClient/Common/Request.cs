@@ -1,4 +1,6 @@
-﻿namespace Nameless.RawgClient.Common {
+﻿using Nameless.RawgClient.Infrastructure;
+
+namespace Nameless.RawgClient.Common {
     /// <summary>
     /// Defines a base request object.
     /// </summary>
@@ -10,19 +12,19 @@
         /// <summary>
         /// Gets or init the page number.
         /// </summary>
-        [JsonProperty(PageNumberKey, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PageNumberKey)]
         public int? PageNumber { get; init; }
 
         /// <summary>
         /// Gets or init the page size.
         /// </summary>
-        [JsonProperty(PageSizeKey, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(PageSizeKey)]
         public int? PageSize { get; init; }
 
         /// <summary>
         /// Gets or init the ordering.
         /// </summary>
-        [JsonProperty(OrderingKey, NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty(OrderingKey)]
         public Ordering? Ordering { get; init; }
 
         /// <summary>
@@ -32,11 +34,11 @@
         public virtual Dictionary<string, object[]> GetQueryParams() {
             var result = new Dictionary<string, object[]>();
 
-            if (PageNumber.HasValue) {
+            if (PageNumber is > 0) {
                 result[PageNumberKey] = [PageNumber.Value];
             }
 
-            if (PageSize.HasValue) {
+            if (PageSize is > 0) {
                 result[PageSizeKey] = [PageSize.Value];
             }
 

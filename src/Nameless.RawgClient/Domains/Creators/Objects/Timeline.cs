@@ -1,0 +1,18 @@
+﻿namespace Nameless.RawgClient.Domains.Creators.Objects {
+    /// <summary>
+    /// Creator's timeline object.
+    /// </summary>
+    public record Timeline {
+        /// <summary>
+        /// Gets or init field "year".
+        /// </summary>
+        [JsonProperty("year")]
+        public int Year { get; init; }
+
+        /// <summary>
+        /// Gets or init field "count".
+        /// </summary>
+        [JsonProperty("count")]
+        public int Count { get; init; }
+    }
+}

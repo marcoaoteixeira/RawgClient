@@ -1,4 +1,9 @@
-﻿namespace Nameless.RawgClient {
+﻿using Nameless.RawgClient.Impl;
+using Nameless.RawgClient.Infrastructure;
+using Nameless.RawgClient.Infrastructure.Impl;
+using Nameless.RawgClient.Options;
+
+namespace Nameless.RawgClient {
     /// <summary>
     /// <see cref="IServiceCollection"/> extension methods.
     /// </summary>

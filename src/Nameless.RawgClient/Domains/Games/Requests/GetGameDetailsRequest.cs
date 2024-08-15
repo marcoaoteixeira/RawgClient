@@ -1,8 +1,12 @@
-﻿namespace Nameless.RawgClient.Domains.Games.Requests {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Games.Objects;
+using Nameless.RawgClient.Domains.Games.Responses;
+
+namespace Nameless.RawgClient.Domains.Games.Requests {
     /// <summary>
-    /// Represents a request object for game's details.
+    /// Request for game's details.
     /// </summary>
-    /// <param name="Id">Gets or init the game's identifier.</param>
-    public sealed record GetGameDetailsRequest([property: JsonProperty("id")] int Id)
+    /// <param name="Id">The game's identifier.</param>
+    public record GetGameDetailsRequest([property: JsonProperty("id")] int Id)
         : Request<GetGameDetailsResponse, Game>;
 }

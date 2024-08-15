@@ -13,6 +13,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Domains\GamesTests.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\get-creator-details.json" />
 	  <None Remove="Resources\get-creator-roles.json" />
 	  <None Remove="Resources\get-creators.json" />

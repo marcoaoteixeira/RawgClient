@@ -1,6 +1,6 @@
 ﻿namespace Nameless.RawgClient.Common {
     /// <summary>
-    /// Generic contract for a request object.
+    /// Defines a base generic request object.
     /// </summary>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="TResult">The type of the result inside the response.</typeparam>

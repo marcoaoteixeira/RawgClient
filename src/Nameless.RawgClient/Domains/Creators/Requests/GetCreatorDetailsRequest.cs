@@ -1,8 +1,12 @@
-﻿namespace Nameless.RawgClient.Domains.Creators.Requests {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Creators.Objects;
+using Nameless.RawgClient.Domains.Creators.Responses;
+
+namespace Nameless.RawgClient.Domains.Creators.Requests {
     /// <summary>
-    /// Request object used to retrieve a creator by its identifier.
+    /// Request for creator's details.
     /// </summary>
-    /// <param name="Id">Gets or init the identifier.</param>
+    /// <param name="Id">The creator's identifier.</param>
     public sealed record GetCreatorDetailsRequest([property: JsonProperty("id")] int Id)
         : Request<GetCreatorDetailsResponse, Creator>;
 }

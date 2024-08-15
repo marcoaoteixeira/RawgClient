@@ -1,6 +1,10 @@
-﻿namespace Nameless.RawgClient.Domains.Platforms.Requests {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Platforms.Objects;
+using Nameless.RawgClient.Domains.Platforms.Responses;
+
+namespace Nameless.RawgClient.Domains.Platforms.Requests {
     /// <summary>
-    /// Represents a request object for a list of platform.
+    /// Request for a list of platforms.
     /// </summary>
     public sealed record GetPlatformsRequest
         : Request<GetPlatformsResponse, Platform>;

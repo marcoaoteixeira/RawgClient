@@ -1,6 +1,9 @@
-﻿namespace Nameless.RawgClient.Domains.Stores.Responses {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Stores.Objects;
+
+namespace Nameless.RawgClient.Domains.Stores.Responses {
     /// <summary>
-    /// Represents the response for a list of stores.
+    /// Response for a list of stores.
     /// </summary>
     public sealed record GetStoresResponse
         : Response<Store>;

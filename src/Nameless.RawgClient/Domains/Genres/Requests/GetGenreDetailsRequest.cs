@@ -1,8 +1,12 @@
-﻿namespace Nameless.RawgClient.Domains.Genres.Requests {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Genres.Objects;
+using Nameless.RawgClient.Domains.Genres.Responses;
+
+namespace Nameless.RawgClient.Domains.Genres.Requests {
     /// <summary>
-    /// Represents a request object for genre's details.
+    /// Request for genre's details.
     /// </summary>
-    /// <param name="Id">Gets or init the genre's identifier.</param>
+    /// <param name="Id">The genre's identifier.</param>
     public sealed record GetGenreDetailsRequest([property: JsonProperty("id")] int Id)
         : Request<GetGenreDetailsResponse, Genre>;
 }

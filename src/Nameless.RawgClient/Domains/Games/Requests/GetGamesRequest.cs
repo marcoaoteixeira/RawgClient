@@ -1,7 +1,11 @@
-﻿namespace Nameless.RawgClient.Domains.Games.Requests {
+﻿using Nameless.RawgClient.Common;
+using Nameless.RawgClient.Domains.Games.Objects;
+using Nameless.RawgClient.Domains.Games.Responses;
+
+namespace Nameless.RawgClient.Domains.Games.Requests {
     /// <summary>
-    /// Represents a request object for a list of game.
+    /// Request for a list of games.
     /// </summary>
-    public sealed record GetGamesRequest
+    public record GetGamesRequest
         : Request<GetGamesResponse, Game>;
 }
