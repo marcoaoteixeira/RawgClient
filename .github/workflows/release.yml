@@ -1,0 +1,70 @@
+name: Release Cycle
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+env:
+  OUTPUT_PATH: './nupkgs'
+
+jobs:
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ['8.0.x']
+
+    steps:
+      - name: Fetch Build Version Number
+        id: build
+        run: |
+          if [[ ${GITHUB_REF} =~ \/v(.*)$ ]]
+          then
+            echo BUILD_VERSION=${BASH_REMATCH[1]} >> $GITHUB_ENV
+          else
+            echo BUILD_VERSION='1.0.0' >> $GITHUB_ENV
+          fi
+
+      - name: Current Build Version Number
+        run: echo ${{ env.BUILD_VERSION }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Checkout Source Code
+        uses: actions/checkout@v4.1.6
+
+      - name: Set GitHub Package Registry as NuGet Source
+        run: |
+          dotnet nuget add source \
+            --username ${{ github.repository_owner }} \
+            --password ${{ secrets.GITHUB_TOKEN }} \
+            --store-password-in-clear-text \
+            --name github ${{ vars.NUGET_SOURCE_URL }}
+
+      - name: Pack NuGet Packages
+        run: |
+          dotnet pack \
+            --configuration Release \
+            --include-symbols \
+            --nologo \
+            --output ${{ env.OUTPUT_PATH }} \
+            --verbosity normal \
+            -p:AssemblyVersion=${{ env.BUILD_VERSION }} \
+            -p:FileVersion=${{ env.BUILD_VERSION }} \
+            -p:PackageVersion=${{ env.BUILD_VERSION }} \
+            -p:Version=${{ env.BUILD_VERSION }}
+
+      - name: Publish NuGet Packages
+        if: success()
+        run: |
+          dotnet nuget push ${{ env.OUTPUT_PATH }}/*.nupkg \
+            --source ${{ vars.NUGET_SOURCE_URL }} \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --skip-duplicate

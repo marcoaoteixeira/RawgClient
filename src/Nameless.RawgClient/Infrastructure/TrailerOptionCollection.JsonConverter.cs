@@ -1,4 +1,4 @@
-﻿using Nameless.RawgClient.Domains.Games.Objects;
+﻿using Nameless.RawgClient.Objects;
 
 namespace Nameless.RawgClient.Infrastructure {
     /// <summary>

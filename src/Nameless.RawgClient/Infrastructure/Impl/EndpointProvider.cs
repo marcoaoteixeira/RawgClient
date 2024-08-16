@@ -1,13 +1,14 @@
 ﻿using System.Globalization;
 using Nameless.RawgClient.Common;
-using Nameless.RawgClient.Domains.CreatorRoles.Requests;
-using Nameless.RawgClient.Domains.Creators.Requests;
-using Nameless.RawgClient.Domains.Developers.Requests;
-using Nameless.RawgClient.Domains.Genres.Requests;
-using Nameless.RawgClient.Domains.Platforms.Requests;
-using Nameless.RawgClient.Domains.Publishers.Requests;
-using Nameless.RawgClient.Domains.Stores.Requests;
-using Nameless.RawgClient.Domains.Tags.Requests;
+using Nameless.RawgClient.Requests.CreatorRoles;
+using Nameless.RawgClient.Requests.Creators;
+using Nameless.RawgClient.Requests.Developers;
+using Nameless.RawgClient.Requests.Games;
+using Nameless.RawgClient.Requests.Genres;
+using Nameless.RawgClient.Requests.Platforms;
+using Nameless.RawgClient.Requests.Publishers;
+using Nameless.RawgClient.Requests.Stores;
+using Nameless.RawgClient.Requests.Tags;
 
 namespace Nameless.RawgClient.Infrastructure.Impl {
     /// <summary>
@@ -27,10 +28,19 @@ namespace Nameless.RawgClient.Infrastructure.Impl {
                 GetDevelopersRequest => Endpoints.Developers.GetDevelopers,
                 GetDeveloperDetailsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Developers.GetDeveloperDetails, inner.Id),
 
-                //GetGamesRequest => Endpoints.Games.GetGames,
-                //GetGameDetailsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameDetails, inner.Id),
-                //GetGameDetailsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameDetails, inner.Id),
-
+                GetGameAchievementsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameAchievements, inner.Id),
+                GetGameAdditionsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameAdditions, inner.Id),
+                GetGameDetailsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameDetails, inner.Id),
+                GetGameDevelopmentTeamRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameDevelopmentTeam, inner.Id),
+                GetGameRedditPostsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameRedditPosts, inner.Id),
+                GetGameScreenshotsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameScreenshots, inner.Id),
+                GetGameSeriesRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameSeries, inner.Id),
+                GetGamesRequest => Endpoints.Games.GetGames,
+                GetGameSuggestionsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameSuggestions, inner.Id),
+                GetGameTrailersRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameTrailers, inner.Id),
+                GetGameTwitchStreamsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameTwitchStreams, inner.Id),
+                GetGameYouTubeChannelsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameYouTubeChannels, inner.Id),
+                
                 GetGenresRequest => Endpoints.Genres.GetGenres,
                 GetGenreDetailsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Genres.GetGenreDetails, inner.Id),
 

@@ -1,1 +1,476 @@
-{"id":2551,"name":"John Romero","slug":"john-romero","image":"https://media.rawg.io/media/persons_wiki/d84/d84c379a412d28749b52615b1a321261.jpg","image_background":"https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg","description":"<p>John Romero is a games writer, director, composer and artist who started the games industry career in 1900. Since then, Romero has been working with Valve Software, SEGA, Bethesda Softworks and id Software. Romero&#39;s first published game was Catacomb Armageddon. Next, John Romero worked on Blackroom taking on the role of director. Afterwards, John Romero worked on Blake Stone: Aliens of Gold developed by Saffire in 1993. The latest work of John Romero was Quake (2021), published in 2021.</p>","games_count":75,"reviews_count":6151,"rating":"4.20","rating_top":5,"updated":"2024-01-27T18:04:58","positions":[{"id":1,"name":"writer","slug":"writer"},{"id":2,"name":"director","slug":"director"},{"id":3,"name":"composer","slug":"composer"},{"id":4,"name":"artist","slug":"artist"},{"id":5,"name":"producer","slug":"producer"},{"id":6,"name":"designer","slug":"designer"},{"id":7,"name":"programmer","slug":"programmer"}],"platforms":{"total":29,"results":[{"count":67,"percent":33.5,"platform":{"id":1,"name":"PC","slug":"pc"}},{"count":38,"percent":19.0,"platform":{"id":5,"name":"Apple Macintosh","slug":"mac"}},{"count":21,"percent":10.5,"platform":{"id":7,"name":"Nintendo","slug":"nintendo"}},{"count":16,"percent":8.0,"platform":{"id":2,"name":"PlayStation","slug":"playstation"}},{"count":15,"percent":7.5,"platform":{"id":3,"name":"Xbox","slug":"xbox"}},{"count":10,"percent":5.0,"platform":{"id":6,"name":"Linux","slug":"linux"}},{"count":8,"percent":4.0,"platform":{"id":10,"name":"Commodore / Amiga","slug":"commodore-amiga"}},{"count":7,"percent":3.5,"platform":{"id":4,"name":"iOS","slug":"ios"}},{"count":7,"percent":3.5,"platform":{"id":11,"name":"SEGA","slug":"sega"}},{"count":5,"percent":2.5,"platform":{"id":8,"name":"Android","slug":"android"}},{"count":4,"percent":2.0,"platform":{"id":9,"name":"Atari","slug":"atari"}},{"count":2,"percent":1.0,"platform":{"id":12,"name":"3DO","slug":"3do"}}],"count":12},"ratings":[{"id":5,"title":"exceptional","count":2806,"percent":45.62},{"id":4,"title":"recommended","count":2426,"percent":39.44},{"id":3,"title":"meh","count":587,"percent":9.54},{"id":1,"title":"skip","count":332,"percent":5.4}],"timeline":[{"year":1954,"count":0},{"year":1955,"count":0},{"year":1956,"count":0},{"year":1957,"count":0},{"year":1958,"count":0},{"year":1959,"count":0},{"year":1960,"count":0},{"year":1961,"count":0},{"year":1962,"count":0},{"year":1963,"count":0},{"year":1964,"count":0},{"year":1965,"count":0},{"year":1966,"count":0},{"year":1967,"count":0},{"year":1968,"count":0},{"year":1969,"count":0},{"year":1970,"count":0},{"year":1971,"count":0},{"year":1972,"count":0},{"year":1973,"count":0},{"year":1974,"count":0},{"year":1975,"count":0},{"year":1976,"count":0},{"year":1977,"count":0},{"year":1978,"count":0},{"year":1979,"count":0},{"year":1980,"count":0},{"year":1981,"count":0},{"year":1982,"count":0},{"year":1983,"count":0},{"year":1984,"count":0},{"year":1985,"count":0},{"year":1986,"count":1},{"year":1987,"count":0},{"year":1988,"count":1},{"year":1989,"count":5},{"year":1990,"count":6},{"year":1991,"count":12},{"year":1992,"count":4},{"year":1993,"count":8},{"year":1994,"count":4},{"year":1995,"count":3},{"year":1996,"count":4},{"year":1997,"count":4},{"year":1998,"count":3},{"year":1999,"count":0},{"year":2000,"count":2},{"year":2001,"count":2},{"year":2002,"count":0},{"year":2003,"count":1},{"year":2004,"count":1},{"year":2005,"count":1},{"year":2006,"count":0},{"year":2007,"count":0},{"year":2008,"count":0},{"year":2009,"count":0},{"year":2010,"count":0},{"year":2011,"count":0},{"year":2012,"count":0},{"year":2013,"count":1},{"year":2014,"count":0},{"year":2015,"count":1},{"year":2016,"count":2},{"year":2017,"count":4},{"year":2018,"count":0},{"year":2019,"count":2},{"year":2020,"count":0},{"year":2021,"count":1},{"year":2022,"count":0},{"year":2023,"count":0},{"year":2024,"count":0}]}
+{
+  "id": 2551,
+  "name": "John Romero",
+  "slug": "john-romero",
+  "image": "https://media.rawg.io/media/persons_wiki/d84/d84c379a412d28749b52615b1a321261.jpg",
+  "image_background": "https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg",
+  "description": "<p>John Romero is a games writer, director, composer and artist who started the games industry career in 1900. Since then, Romero has been working with Valve Software, SEGA, Bethesda Softworks and id Software. Romero&#39;s first published game was Catacomb Armageddon. Next, John Romero worked on Blackroom taking on the role of director. Afterwards, John Romero worked on Blake Stone: Aliens of Gold developed by Saffire in 1993. The latest work of John Romero was Quake (2021), published in 2021.</p>",
+  "games_count": 75,
+  "reviews_count": 6151,
+  "rating": "4.20",
+  "rating_top": 5,
+  "updated": "2024-01-27T18:04:58",
+  "positions": [
+    {
+      "id": 1,
+      "name": "writer",
+      "slug": "writer"
+    },
+    {
+      "id": 2,
+      "name": "director",
+      "slug": "director"
+    },
+    {
+      "id": 3,
+      "name": "composer",
+      "slug": "composer"
+    },
+    {
+      "id": 4,
+      "name": "artist",
+      "slug": "artist"
+    },
+    {
+      "id": 5,
+      "name": "producer",
+      "slug": "producer"
+    },
+    {
+      "id": 6,
+      "name": "designer",
+      "slug": "designer"
+    },
+    {
+      "id": 7,
+      "name": "programmer",
+      "slug": "programmer"
+    }
+  ],
+  "platforms": {
+    "total": 29,
+    "results": [
+      {
+        "count": 67,
+        "percent": 33.5,
+        "platform": {
+          "id": 1,
+          "name": "PC",
+          "slug": "pc"
+        }
+      },
+      {
+        "count": 38,
+        "percent": 19.0,
+        "platform": {
+          "id": 5,
+          "name": "Apple Macintosh",
+          "slug": "mac"
+        }
+      },
+      {
+        "count": 21,
+        "percent": 10.5,
+        "platform": {
+          "id": 7,
+          "name": "Nintendo",
+          "slug": "nintendo"
+        }
+      },
+      {
+        "count": 16,
+        "percent": 8.0,
+        "platform": {
+          "id": 2,
+          "name": "PlayStation",
+          "slug": "playstation"
+        }
+      },
+      {
+        "count": 15,
+        "percent": 7.5,
+        "platform": {
+          "id": 3,
+          "name": "Xbox",
+          "slug": "xbox"
+        }
+      },
+      {
+        "count": 10,
+        "percent": 5.0,
+        "platform": {
+          "id": 6,
+          "name": "Linux",
+          "slug": "linux"
+        }
+      },
+      {
+        "count": 8,
+        "percent": 4.0,
+        "platform": {
+          "id": 10,
+          "name": "Commodore / Amiga",
+          "slug": "commodore-amiga"
+        }
+      },
+      {
+        "count": 7,
+        "percent": 3.5,
+        "platform": {
+          "id": 4,
+          "name": "iOS",
+          "slug": "ios"
+        }
+      },
+      {
+        "count": 7,
+        "percent": 3.5,
+        "platform": {
+          "id": 11,
+          "name": "SEGA",
+          "slug": "sega"
+        }
+      },
+      {
+        "count": 5,
+        "percent": 2.5,
+        "platform": {
+          "id": 8,
+          "name": "Android",
+          "slug": "android"
+        }
+      },
+      {
+        "count": 4,
+        "percent": 2.0,
+        "platform": {
+          "id": 9,
+          "name": "Atari",
+          "slug": "atari"
+        }
+      },
+      {
+        "count": 2,
+        "percent": 1.0,
+        "platform": {
+          "id": 12,
+          "name": "3DO",
+          "slug": "3do"
+        }
+      }
+    ],
+    "count": 12
+  },
+  "ratings": [
+    {
+      "id": 5,
+      "title": "exceptional",
+      "count": 2806,
+      "percent": 45.62
+    },
+    {
+      "id": 4,
+      "title": "recommended",
+      "count": 2426,
+      "percent": 39.44
+    },
+    {
+      "id": 3,
+      "title": "meh",
+      "count": 587,
+      "percent": 9.54
+    },
+    {
+      "id": 1,
+      "title": "skip",
+      "count": 332,
+      "percent": 5.4
+    }
+  ],
+  "timeline": [
+    {
+      "year": 1954,
+      "count": 0
+    },
+    {
+      "year": 1955,
+      "count": 0
+    },
+    {
+      "year": 1956,
+      "count": 0
+    },
+    {
+      "year": 1957,
+      "count": 0
+    },
+    {
+      "year": 1958,
+      "count": 0
+    },
+    {
+      "year": 1959,
+      "count": 0
+    },
+    {
+      "year": 1960,
+      "count": 0
+    },
+    {
+      "year": 1961,
+      "count": 0
+    },
+    {
+      "year": 1962,
+      "count": 0
+    },
+    {
+      "year": 1963,
+      "count": 0
+    },
+    {
+      "year": 1964,
+      "count": 0
+    },
+    {
+      "year": 1965,
+      "count": 0
+    },
+    {
+      "year": 1966,
+      "count": 0
+    },
+    {
+      "year": 1967,
+      "count": 0
+    },
+    {
+      "year": 1968,
+      "count": 0
+    },
+    {
+      "year": 1969,
+      "count": 0
+    },
+    {
+      "year": 1970,
+      "count": 0
+    },
+    {
+      "year": 1971,
+      "count": 0
+    },
+    {
+      "year": 1972,
+      "count": 0
+    },
+    {
+      "year": 1973,
+      "count": 0
+    },
+    {
+      "year": 1974,
+      "count": 0
+    },
+    {
+      "year": 1975,
+      "count": 0
+    },
+    {
+      "year": 1976,
+      "count": 0
+    },
+    {
+      "year": 1977,
+      "count": 0
+    },
+    {
+      "year": 1978,
+      "count": 0
+    },
+    {
+      "year": 1979,
+      "count": 0
+    },
+    {
+      "year": 1980,
+      "count": 0
+    },
+    {
+      "year": 1981,
+      "count": 0
+    },
+    {
+      "year": 1982,
+      "count": 0
+    },
+    {
+      "year": 1983,
+      "count": 0
+    },
+    {
+      "year": 1984,
+      "count": 0
+    },
+    {
+      "year": 1985,
+      "count": 0
+    },
+    {
+      "year": 1986,
+      "count": 1
+    },
+    {
+      "year": 1987,
+      "count": 0
+    },
+    {
+      "year": 1988,
+      "count": 1
+    },
+    {
+      "year": 1989,
+      "count": 5
+    },
+    {
+      "year": 1990,
+      "count": 6
+    },
+    {
+      "year": 1991,
+      "count": 12
+    },
+    {
+      "year": 1992,
+      "count": 4
+    },
+    {
+      "year": 1993,
+      "count": 8
+    },
+    {
+      "year": 1994,
+      "count": 4
+    },
+    {
+      "year": 1995,
+      "count": 3
+    },
+    {
+      "year": 1996,
+      "count": 4
+    },
+    {
+      "year": 1997,
+      "count": 4
+    },
+    {
+      "year": 1998,
+      "count": 3
+    },
+    {
+      "year": 1999,
+      "count": 0
+    },
+    {
+      "year": 2000,
+      "count": 2
+    },
+    {
+      "year": 2001,
+      "count": 2
+    },
+    {
+      "year": 2002,
+      "count": 0
+    },
+    {
+      "year": 2003,
+      "count": 1
+    },
+    {
+      "year": 2004,
+      "count": 1
+    },
+    {
+      "year": 2005,
+      "count": 1
+    },
+    {
+      "year": 2006,
+      "count": 0
+    },
+    {
+      "year": 2007,
+      "count": 0
+    },
+    {
+      "year": 2008,
+      "count": 0
+    },
+    {
+      "year": 2009,
+      "count": 0
+    },
+    {
+      "year": 2010,
+      "count": 0
+    },
+    {
+      "year": 2011,
+      "count": 0
+    },
+    {
+      "year": 2012,
+      "count": 0
+    },
+    {
+      "year": 2013,
+      "count": 1
+    },
+    {
+      "year": 2014,
+      "count": 0
+    },
+    {
+      "year": 2015,
+      "count": 1
+    },
+    {
+      "year": 2016,
+      "count": 2
+    },
+    {
+      "year": 2017,
+      "count": 4
+    },
+    {
+      "year": 2018,
+      "count": 0
+    },
+    {
+      "year": 2019,
+      "count": 2
+    },
+    {
+      "year": 2020,
+      "count": 0
+    },
+    {
+      "year": 2021,
+      "count": 1
+    },
+    {
+      "year": 2022,
+      "count": 0
+    },
+    {
+      "year": 2023,
+      "count": 0
+    },
+    {
+      "year": 2024,
+      "count": 0
+    }
+  ]
+}

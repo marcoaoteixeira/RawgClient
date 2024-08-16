@@ -15,7 +15,8 @@ namespace Nameless.RawgClient {
         /// <returns>An instance of <see cref="IRawg"/></returns>
         public IRawg CreateSut(string contentFileRelativePath) {
             var httpClient = CreateHttpClient(contentFileRelativePath);
-            var endpointProvider = CreateEndpointProviderMock().Object;
+            var endpointProvider = CreateEndpointProviderMock()
+                .Object;
             var logger = NullLogger<Rawg>.Instance;
 
             return new Rawg(httpClient, endpointProvider, logger);

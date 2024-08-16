@@ -13,8 +13,7 @@
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Ordering value, JsonSerializerOptions options) {
-            writer.WriteStringValue((string)value);
-        }
+        public override void Write(Utf8JsonWriter writer, Ordering value, JsonSerializerOptions options)
+            => writer.WriteStringValue((string)value);
     }
 }

@@ -10,19 +10,20 @@ namespace Nameless.RawgClient.Common {
         private const string OrderingKey = "ordering";
 
         /// <summary>
-        /// Gets or init the page number.
+        /// Gets or init field "page". A page number within the paginated result set.
         /// </summary>
         [JsonPropertyName(PageNumberKey)]
         public int? PageNumber { get; init; }
 
         /// <summary>
-        /// Gets or init the page size.
+        /// Gets or init field "page_size". Number of results to return per page.
         /// </summary>
         [JsonPropertyName(PageSizeKey)]
         public int? PageSize { get; init; }
 
         /// <summary>
-        /// Gets or init the ordering.
+        /// Gets or init field "ordering".
+        /// Available fields: name, released, added, created, updated, rating, metacritic.
         /// </summary>
         [JsonPropertyName(OrderingKey)]
         public Ordering? Ordering { get; init; }

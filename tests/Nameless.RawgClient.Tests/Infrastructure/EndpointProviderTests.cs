@@ -1,15 +1,16 @@
 ﻿using System.Globalization;
 using System.Reflection;
 using Nameless.RawgClient.Common;
-using Nameless.RawgClient.Domains.CreatorRoles.Requests;
-using Nameless.RawgClient.Domains.Creators.Requests;
-using Nameless.RawgClient.Domains.Developers.Requests;
-using Nameless.RawgClient.Domains.Genres.Requests;
-using Nameless.RawgClient.Domains.Platforms.Requests;
-using Nameless.RawgClient.Domains.Publishers.Requests;
-using Nameless.RawgClient.Domains.Stores.Requests;
-using Nameless.RawgClient.Domains.Tags.Requests;
 using Nameless.RawgClient.Infrastructure.Impl;
+using Nameless.RawgClient.Requests.CreatorRoles;
+using Nameless.RawgClient.Requests.Creators;
+using Nameless.RawgClient.Requests.Developers;
+using Nameless.RawgClient.Requests.Games;
+using Nameless.RawgClient.Requests.Genres;
+using Nameless.RawgClient.Requests.Platforms;
+using Nameless.RawgClient.Requests.Publishers;
+using Nameless.RawgClient.Requests.Stores;
+using Nameless.RawgClient.Requests.Tags;
 
 namespace Nameless.RawgClient.Infrastructure {
     public class EndpointProviderTests {
@@ -24,7 +25,7 @@ namespace Nameless.RawgClient.Infrastructure {
 
             // act
             var actual = new Dictionary<MemberInfo, string>();
-            
+
             foreach (var requestType in requestImplementations) {
                 var request = CreateRequestInstance(requestType);
                 var endpoint = sut.GetEndpoint(request);
@@ -45,42 +46,83 @@ namespace Nameless.RawgClient.Infrastructure {
         private static Dictionary<MemberInfo, string> CreateExpectedResult() {
             return new Dictionary<MemberInfo, string> {
                 { typeof(GetCreatorRolesRequest), Endpoints.CreatorRoles.GetCreatorRoles },
-                { typeof(GetCreatorsRequest), Endpoints.Creators.GetCreators },
+
                 { typeof(GetCreatorDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Creators.GetCreatorDetails, DefaultId) },
-                { typeof(GetDevelopersRequest), Endpoints.Developers.GetDevelopers },
+                { typeof(GetCreatorsRequest), Endpoints.Creators.GetCreators },
+
                 { typeof(GetDeveloperDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Developers.GetDeveloperDetails, DefaultId) },
-                { typeof(GetGenresRequest), Endpoints.Genres.GetGenres },
+                { typeof(GetDevelopersRequest), Endpoints.Developers.GetDevelopers },
+
+                { typeof(GetGameAchievementsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameAchievements, DefaultId) },
+                { typeof(GetGameAdditionsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameAdditions, DefaultId) },
+                { typeof(GetGameDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameDetails, DefaultId) },
+                { typeof(GetGameDevelopmentTeamRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameDevelopmentTeam, DefaultId) },
+                { typeof(GetGameRedditPostsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameRedditPosts, DefaultId) },
+                { typeof(GetGameScreenshotsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameScreenshots, DefaultId) },
+                { typeof(GetGameSeriesRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameSeries, DefaultId) },
+                { typeof(GetGamesRequest), Endpoints.Games.GetGames },
+                { typeof(GetGameSuggestionsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameSuggestions, DefaultId) },
+                { typeof(GetGameTrailersRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameTrailers, DefaultId) },
+                { typeof(GetGameTwitchStreamsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameTwitchStreams, DefaultId) },
+                { typeof(GetGameYouTubeChannelsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameYouTubeChannels, DefaultId) },
+
                 { typeof(GetGenreDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Genres.GetGenreDetails, DefaultId) },
-                { typeof(GetPlatformsRequest), Endpoints.Platforms.GetPlatforms },
-                { typeof(GetPlatformDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Platforms.GetPlatformDetails, DefaultId) },
+                { typeof(GetGenresRequest), Endpoints.Genres.GetGenres },
+
                 { typeof(GetParentPlatformsRequest), Endpoints.Platforms.GetParentPlatforms },
-                { typeof(GetPublishersRequest), Endpoints.Publishers.GetPublishers },
+                { typeof(GetPlatformDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Platforms.GetPlatformDetails, DefaultId) },
+                { typeof(GetPlatformsRequest), Endpoints.Platforms.GetPlatforms },
+
                 { typeof(GetPublisherDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Publishers.GetPublisherDetails, DefaultId) },
-                { typeof(GetStoresRequest), Endpoints.Stores.GetStores },
+                { typeof(GetPublishersRequest), Endpoints.Publishers.GetPublishers },
+
                 { typeof(GetStoreDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Stores.GetStoreDetails, DefaultId) },
-                { typeof(GetTagsRequest), Endpoints.Tags.GetTags },
+                { typeof(GetStoresRequest), Endpoints.Stores.GetStores },
+
                 { typeof(GetTagDetailsRequest), string.Format(CultureInfo.CurrentCulture, Endpoints.Tags.GetTagDetails, DefaultId) },
+                { typeof(GetTagsRequest), Endpoints.Tags.GetTags },
             };
         }
 
         private static Request CreateRequestInstance(MemberInfo requestType) {
             return requestType.Name switch {
                 nameof(GetCreatorRolesRequest) => new GetCreatorRolesRequest(),
-                nameof(GetCreatorsRequest) => new GetCreatorsRequest(),
+
                 nameof(GetCreatorDetailsRequest) => new GetCreatorDetailsRequest(DefaultId),
-                nameof(GetDevelopersRequest) => new GetDevelopersRequest(),
+                nameof(GetCreatorsRequest) => new GetCreatorsRequest(),
+
                 nameof(GetDeveloperDetailsRequest) => new GetDeveloperDetailsRequest(DefaultId),
-                nameof(GetGenresRequest) => new GetGenresRequest(),
+                nameof(GetDevelopersRequest) => new GetDevelopersRequest(),
+
+                nameof(GetGameAchievementsRequest) => new GetGameAchievementsRequest(DefaultId),
+                nameof(GetGameAdditionsRequest) => new GetGameAdditionsRequest(DefaultId),
+                nameof(GetGameDetailsRequest) => new GetGameDetailsRequest(DefaultId),
+                nameof(GetGameDevelopmentTeamRequest) => new GetGameDevelopmentTeamRequest(DefaultId),
+                nameof(GetGameRedditPostsRequest) => new GetGameRedditPostsRequest(DefaultId),
+                nameof(GetGameScreenshotsRequest) => new GetGameScreenshotsRequest(DefaultId),
+                nameof(GetGameSeriesRequest) => new GetGameSeriesRequest(DefaultId),
+                nameof(GetGamesRequest) => new GetGamesRequest(),
+                nameof(GetGameSuggestionsRequest) => new GetGameSuggestionsRequest(DefaultId),
+                nameof(GetGameTrailersRequest) => new GetGameTrailersRequest(DefaultId),
+                nameof(GetGameTwitchStreamsRequest) => new GetGameTwitchStreamsRequest(DefaultId),
+                nameof(GetGameYouTubeChannelsRequest) => new GetGameYouTubeChannelsRequest(DefaultId),
+
                 nameof(GetGenreDetailsRequest) => new GetGenreDetailsRequest(DefaultId),
-                nameof(GetPlatformsRequest) => new GetPlatformsRequest(),
-                nameof(GetPlatformDetailsRequest) => new GetPlatformDetailsRequest(DefaultId),
+                nameof(GetGenresRequest) => new GetGenresRequest(),
+
                 nameof(GetParentPlatformsRequest) => new GetParentPlatformsRequest(),
-                nameof(GetPublishersRequest) => new GetPublishersRequest(),
+                nameof(GetPlatformDetailsRequest) => new GetPlatformDetailsRequest(DefaultId),
+                nameof(GetPlatformsRequest) => new GetPlatformsRequest(),
+
                 nameof(GetPublisherDetailsRequest) => new GetPublisherDetailsRequest(DefaultId),
-                nameof(GetStoresRequest) => new GetStoresRequest(),
+                nameof(GetPublishersRequest) => new GetPublishersRequest(),
+
                 nameof(GetStoreDetailsRequest) => new GetStoreDetailsRequest(DefaultId),
-                nameof(GetTagsRequest) => new GetTagsRequest(),
+                nameof(GetStoresRequest) => new GetStoresRequest(),
+
                 nameof(GetTagDetailsRequest) => new GetTagDetailsRequest(DefaultId),
+                nameof(GetTagsRequest) => new GetTagsRequest(),
+
                 _ => throw new InvalidOperationException($"Missing instantiation logic for request {requestType.Name}")
             };
         }

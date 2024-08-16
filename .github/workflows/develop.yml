@@ -1,0 +1,82 @@
+name: Development Cycle
+
+on:
+  push:
+    branches:
+      - "develop"
+
+env:
+  CODE_COVERAGE_COBERTURA_FILE_PATH: "./code-coverage/**/coverage.cobertura.xml"
+  CODE_COVERAGE_REPORT_FOLDER_PATH: "./code-coverage/report"
+  SOLUTION: "./RawgClient.sln"
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ["8.0.x"]
+
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Checkout Source Code
+        uses: actions/checkout@v4.1.6
+
+      - name: Set GitHub Package Registry as NuGet Source
+        run: |
+          dotnet nuget add source \
+            --username ${{ github.repository_owner }} \
+            --password ${{ secrets.GITHUB_TOKEN }} \
+            --store-password-in-clear-text \
+            --name github ${{ vars.NUGET_SOURCE_URL }}
+
+      - name: Build Solution
+        if: success()
+        run: |
+          dotnet build ${{ env.SOLUTION }} \
+            --configuration Debug \
+            --nologo \
+            --verbosity normal
+
+      - name: Run Tests
+        if: success()
+        run: |
+          dotnet test ${{ env.SOLUTION }} \
+            --configuration Debug \
+            --collect:"XPlat Code Coverage" \
+            --filter "Category!=RunsOnDevMachine" \
+            --logger:"Html;LogFileName=code-coverage-log.html" \
+            --no-build \
+            --nologo \
+            --no-restore \
+            --results-directory ./code-coverage/ \
+            --settings .runsettings \
+            --verbosity normal
+
+      - name: Install Coverage Report Tool
+        if: success()
+        run: |
+          dotnet tool install dotnet-reportgenerator-globaltool \
+            --version 5.2.0 \
+            --global
+
+      - name: Generate Coverage Report
+        if: success()
+        run: |
+          reportgenerator \
+            "-reports:${{ env.CODE_COVERAGE_COBERTURA_FILE_PATH }}" \
+            "-targetdir:${{ env.CODE_COVERAGE_REPORT_FOLDER_PATH }}" \
+            -reporttypes:Html
+
+      - name: Upload Coverage Report to Artifacts
+        uses: actions/upload-artifact@v4.3.3
+        if: success()
+        with:
+          name: coverage-report
+          path: ${{ env.CODE_COVERAGE_REPORT_FOLDER_PATH }}
+          retention-days: 3

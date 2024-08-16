@@ -10,7 +10,8 @@ namespace Nameless.RawgClient {
             var result = Path.GetDirectoryName(path)!;
 
             return combineWith.Length > 0
-                ? Path.Combine(combineWith.Prepend(result).ToArray())
+                ? Path.Combine(combineWith.Prepend(result)
+                                          .ToArray())
                 : result;
         }
     }

@@ -14,6 +14,17 @@ namespace Nameless.RawgClient.Impl {
             options: null
         );
 
+        private static readonly Action<ILogger, string, Exception?> DebuggerLoggerHandler = LoggerMessage.Define<string>(
+            logLevel: LogLevel.Debug,
+            eventId: default,
+            formatString: "{Message}",
+            options: null
+        );
+
+        private static readonly JsonSerializerOptions SerializerOptions = new() {
+            NumberHandling = JsonNumberHandling.AllowReadingFromString
+        };
+
         private readonly HttpClient _httpClient;
         private readonly IEndpointProvider _endpointProvider;
         private readonly ILogger<Rawg> _logger;
@@ -89,7 +100,15 @@ namespace Nameless.RawgClient.Impl {
             return CreateResponse(obj, request);
         }
 
-        private static string CreateRequestUri(Uri baseUri, string endpoint, Request request) {
+        // ReSharper disable once UnusedParameter.Local
+        private static async Task<string> ExtractHttpMessageContentAsync(HttpResponseMessage response, CancellationToken cancellationToken) {
+            var json = await response.Content
+                                     .ReadAsStringAsync(cancellationToken)
+                                     .ConfigureAwait(continueOnCapturedContext: false);
+            return json;
+        }
+
+        private string CreateRequestUri(Uri baseUri, string endpoint, Request request) {
             var builder = new UriBuilder(baseUri) { Path = endpoint, };
             var queryString = HttpUtility.ParseQueryString(baseUri.Query);
             foreach (var queryParam in request.GetQueryParams()) {
@@ -98,15 +117,12 @@ namespace Nameless.RawgClient.Impl {
             }
 
             builder.Query = queryString.ToString();
-            return builder.Uri.AbsoluteUri;
-        }
 
-        // ReSharper disable once UnusedParameter.Local
-        private static async Task<string> ExtractHttpMessageContentAsync(HttpResponseMessage response, CancellationToken cancellationToken) {
-            var json = await response.Content
-                                     .ReadAsStringAsync(cancellationToken)
-                                     .ConfigureAwait(continueOnCapturedContext: false);
-            return json;
+            var result = builder.Uri.AbsoluteUri;
+
+            DebuggerLoggerHandler(_logger, $"Calling RAWG API URL: {result}", null);
+
+            return result;
         }
 
         private Response<TResult> CreateResponse<TResult>(JsonObject obj, Request<TResult> request)
@@ -146,7 +162,7 @@ namespace Nameless.RawgClient.Impl {
                 else {
                     // If it doesn't contain the key "results", it means it's just one item.
                     // This unique item will reside in the root object.
-                    var item = obj.Deserialize<TResult>();
+                    var item = obj.Deserialize<TResult>(options: SerializerOptions);
                     results = item is not null ? [item] : [];
 
                     // Update count property

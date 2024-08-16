@@ -80,27 +80,27 @@
             /// <summary>
             /// Gets a list of game trailers.
             /// </summary>
-            public const string GetGameMovies = "/api/games/{0}/movies";
+            public const string GetGameTrailers = "/api/games/{0}/movies";
 
             /// <summary>
             /// Gets a list of most recent posts from the game's subreddit.
             /// </summary>
-            public const string GetGameReddit = "/api/games/{0}/reddit";
+            public const string GetGameRedditPosts = "/api/games/{0}/reddit";
 
             /// <summary>
             /// Gets a list of visually similar games, available only for business and enterprise API users.
             /// </summary>
-            public const string GetGameSuggested = "/api/games/{0}/suggested";
+            public const string GetGameSuggestions = "/api/games/{0}/suggested";
 
             /// <summary>
             /// Gets streams on Twitch associated with the game, available only for business and enterprise API users.
             /// </summary>
-            public const string GetGameTwitch = "/api/games/{0}/twitch";
+            public const string GetGameTwitchStreams = "/api/games/{0}/twitch";
 
             /// <summary>
             /// Gets videos from YouTube associated with the game, available only for business and enterprise API users.
             /// </summary>
-            public const string GetGameYouTube = "/api/games/{0}/youtube";
+            public const string GetGameYouTubeChannels = "/api/games/{0}/youtube";
         }
 
         public static class Genres {

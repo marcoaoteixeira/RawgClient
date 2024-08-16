@@ -9,7 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{63891176
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nameless.RawgClient", "src\Nameless.RawgClient\Nameless.RawgClient.csproj", "{8B616001-88E5-4D2B-903A-B8444A990B8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.RawgClient.Tests", "tests\Nameless.RawgClient.Tests\Nameless.RawgClient.Tests.csproj", "{4E535685-AD13-4EC2-B5FE-BC57807214CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nameless.RawgClient.Tests", "tests\Nameless.RawgClient.Tests\Nameless.RawgClient.Tests.csproj", "{4E535685-AD13-4EC2-B5FE-BC57807214CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{EEC57C54-5BB9-4AF7-994E-7C7BCB72ED94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{05DB33E5-37FD-4D57-8100-5883DCAE8F7B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\develop.yml = .github\workflows\develop.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8B616001-88E5-4D2B-903A-B8444A990B8B} = {3C3C42A9-62B0-480F-8D13-96E16D830C86}
 		{4E535685-AD13-4EC2-B5FE-BC57807214CA} = {63891176-18A1-4942-B468-BC2D2F8B860C}
+		{05DB33E5-37FD-4D57-8100-5883DCAE8F7B} = {EEC57C54-5BB9-4AF7-994E-7C7BCB72ED94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9942502-1336-4D63-8B74-58A9536BAD0F}
