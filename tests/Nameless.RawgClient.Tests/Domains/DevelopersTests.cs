@@ -1,5 +1,4 @@
 ﻿using Nameless.RawgClient.Domains.Developers.Requests;
-using Nameless.RawgClient.Domains.Developers.Responses;
 
 namespace Nameless.RawgClient.Domains {
     public class DevelopersTests : TestClassBase {
@@ -13,9 +12,13 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetDevelopersResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
+
+                if (actual.Results.Length <= 0) {
+                    return;
+                }
 
                 var first = actual.Results.First();
                 Assert.That(first.Name, Is.Not.Empty);
@@ -34,7 +37,7 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetDeveloperDetailsResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
 

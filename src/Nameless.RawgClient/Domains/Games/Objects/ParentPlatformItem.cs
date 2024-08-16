@@ -6,7 +6,7 @@
         /// <summary>
         /// Gets or init field "platform".
         /// </summary>
-        [JsonProperty("platform")]
+        [JsonPropertyName("platform")]
         public ParentPlatform? Platform { get; init; }
     }
 }

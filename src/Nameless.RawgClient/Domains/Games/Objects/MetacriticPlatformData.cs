@@ -6,19 +6,19 @@
         /// <summary>
         /// Gets or init field "platform".
         /// </summary>
-        [JsonProperty("platform")]
+        [JsonPropertyName("platform")]
         public int Platform { get; init; }
 
         /// <summary>
         /// Gets or init field "name".
         /// </summary>
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "slug".
         /// </summary>
-        [JsonProperty("slug")]
+        [JsonPropertyName("slug")]
         public string Slug { get; init; } = string.Empty;
     }
 }

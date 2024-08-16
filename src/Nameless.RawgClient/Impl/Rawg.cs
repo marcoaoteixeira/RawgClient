@@ -1,4 +1,5 @@
-﻿using Nameless.RawgClient.Common;
+﻿using System.Text.Json.Nodes;
+using Nameless.RawgClient.Common;
 using Nameless.RawgClient.Infrastructure;
 
 namespace Nameless.RawgClient.Impl {
@@ -36,16 +37,16 @@ namespace Nameless.RawgClient.Impl {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             if (_httpClient.BaseAddress is null) {
-                throw new ArgumentNullException(nameof(HttpClient.BaseAddress), "HttpClient base address should be provided.");
+                throw new ArgumentException("HttpClient base address should be provided.");
             }
-            _baseUri = new Uri(_httpClient.BaseAddress.AbsolutePath);
+
+            _baseUri = new Uri(_httpClient.BaseAddress.AbsoluteUri);
         }
 
         /// <inheritdoc />
-        public async Task<TResponse> QueryAsync<TResponse, TResult>(Request<TResponse, TResult> request, CancellationToken cancellationToken)
-            where TResponse : Response<TResult>, new()
+        public async Task<Response<TResult>> QueryAsync<TResult>(Request<TResult> request, CancellationToken cancellationToken)
             where TResult : class {
-            if (request is null) { throw new ArgumentNullException(nameof(request)); }
+            ArgumentNullException.ThrowIfNull(request, nameof(request));
 
             // GetEndpoint endpoint based on request sent.
             var endpoint = _endpointProvider.GetEndpoint(request);
@@ -60,13 +61,12 @@ namespace Nameless.RawgClient.Impl {
                                                        .ConfigureAwait(continueOnCapturedContext: false);
             }
             catch (Exception ex) {
-                ErrorLoggerHandler(_logger, "Error while calling API through HTTP client.", ex);
-                return CreateErrorResponse<TResponse, TResult>("Call to RAWG API failed. See log files for more information.");
+                return CreateErrorResponse<TResult>("Call to RAWG API failed.", ex);
             }
 
             // If return anything other than success, let's return the response with an error message.
             if (!httpResponseMessage.IsSuccessStatusCode) {
-                return CreateErrorResponse<TResponse, TResult>(httpResponseMessage.ReasonPhrase ?? httpResponseMessage.StatusCode.ToString());
+                return CreateErrorResponse<TResult>(httpResponseMessage.ReasonPhrase ?? httpResponseMessage.StatusCode.ToString());
             }
 
             // Extract the HTTP response content
@@ -74,16 +74,15 @@ namespace Nameless.RawgClient.Impl {
                 .ConfigureAwait(continueOnCapturedContext: false);
 
             // Now, let's try to get a JObject from the content extracted.
-            JObject? obj;
+            JsonObject? obj;
             try {
-                obj = JsonConvert.DeserializeObject<JObject>(content);
+                obj = JsonSerializer.Deserialize<JsonObject>(content);
                 if (obj is null) {
-                    return CreateErrorResponse<TResponse, TResult>("Unable to proper deserialize JSON response.");
+                    return CreateErrorResponse<TResult>("Unable to proper deserialize JSON response.");
                 }
             }
             catch (Exception ex) {
-                ErrorLoggerHandler(_logger, $"Error while deserializing JSON to response ({typeof(TResponse)}).", ex);
-                return CreateErrorResponse<TResponse, TResult>($"Error while deserializing JSON to response ({typeof(TResponse)}). See log files for more information.");
+                return CreateErrorResponse<TResult>("Error while deserializing JSON to response.", ex);
             }
 
             // Finally, return response.
@@ -110,45 +109,51 @@ namespace Nameless.RawgClient.Impl {
             return json;
         }
 
-        private static TResponse CreateErrorResponse<TResponse, TResult>(string message)
-            where TResponse : Response<TResult>, new()
-            where TResult : class
-            => new() { Error = message };
-
-        private static TResponse CreateResponse<TResponse, TResult>(JObject obj, Request<TResponse, TResult> request)
-            where TResponse : Response<TResult>, new()
+        private Response<TResult> CreateResponse<TResult>(JsonObject obj, Request<TResult> request)
             where TResult : class {
             try {
-                var count = obj.TryGetValue("count", out var countToken)
-                        ? countToken.ToObject<int>()
-                        : 0;
+                // Note: TryGetPropertyValue do not return what I was expecting.
+                // It returns a JsonNode to the property (if it's present in
+                // JSON). From there, you need to call JsonNode.GetValue<T> to
+                // get the actual value. If null, it will throw an exception.
+                // To avoid that, I create two extension methods to get int or
+                // string without this exception thing side effect.
+                // Also, TryGetPropertyValue do not annotate the output JsonNode
+                // with NotNullWhenAttribute. Making the design time unaware that
+                // the property is not null if TryGetPropertyValue returns true,
+                // adding that squiggling line (possible null reference) under
+                // the output variable if you try to call any method/property.
 
-                var previous = obj.TryGetValue("previous", out var previousToken)
-                    ? previousToken.ToObject<string>()
+                var count = obj.TryGetPropertyValue("count", out var countToken)
+                    ? countToken.GetIntValue()
+                    : 0;
+
+                var previous = obj.TryGetPropertyValue("previous", out var previousToken)
+                    ? previousToken.GetStringValue()
                     : null;
 
-                var next = obj.TryGetValue("next", out var nextToken)
-                    ? nextToken.ToObject<string>()
+                var next = obj.TryGetPropertyValue("next", out var nextToken)
+                    ? nextToken.GetStringValue()
                     : null;
 
                 TResult[] results;
-                if (!obj.TryGetValue("results", out var resultsToken)) {
+                if (obj.TryGetPropertyValue("results", out var resultsToken)) {
+                    // If it contains the key "results", it means that this is a page of items.
+                    // We'll leave count unchanged because the count value represents
+                    // the total number of possible results for this query.
+                    results = resultsToken.DeserializeWithFallback<TResult[]>(fallback: () => []);
+                }
+                else {
                     // If it doesn't contain the key "results", it means it's just one item.
                     // This unique item will reside in the root object.
-                    var item = obj.ToObject<TResult>();
+                    var item = obj.Deserialize<TResult>();
                     results = item is not null ? [item] : [];
 
                     // Update count property
                     count = results.Length;
                 }
-                else {
-                    // If it contains the key "results", it means that this is a page of items.
-                    // We'll leave count unchanged because the count value represents
-                    // the total number of possible results for this query.
-                    results = resultsToken.ToObject<TResult[]>() ?? [];
-                }
 
-                return new TResponse {
+                return new Response<TResult> {
                     Count = count,
                     Results = results,
 
@@ -162,8 +167,15 @@ namespace Nameless.RawgClient.Impl {
                 };
             }
             catch (Exception ex) {
-                return CreateErrorResponse<TResponse, TResult>($"Error while creating response. {ex.Message}");
+                return CreateErrorResponse<TResult>("Error while creating response.", ex);
             }
+        }
+
+        private Response<TResult> CreateErrorResponse<TResult>(string message, Exception? exception = null)
+            where TResult : class {
+            ErrorLoggerHandler(_logger, message, exception);
+
+            return new Response<TResult> { Error = $"{message} (See log file for more information)" };
         }
     }
 }

@@ -6,13 +6,13 @@
         /// <summary>
         /// Gets or init field "year".
         /// </summary>
-        [JsonProperty("year")]
+        [JsonPropertyName("year")]
         public int Year { get; init; }
 
         /// <summary>
         /// Gets or init field "count".
         /// </summary>
-        [JsonProperty("count")]
+        [JsonPropertyName("count")]
         public int Count { get; init; }
     }
 }

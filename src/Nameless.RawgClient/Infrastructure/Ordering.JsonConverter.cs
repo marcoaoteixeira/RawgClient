@@ -4,11 +4,17 @@
     /// </summary>
     public sealed class OrderingJsonConverter : JsonConverter<Ordering> {
         /// <inheritdoc />
-        public override void WriteJson(JsonWriter writer, Ordering value, JsonSerializer serializer)
-            => writer.WriteValue((string)value);
+        public override Ordering Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
+            if (reader.TokenType != JsonTokenType.String) {
+                return new Ordering();
+            }
+
+            return (Ordering)(reader.GetString() ?? string.Empty);
+        }
 
         /// <inheritdoc />
-        public override Ordering ReadJson(JsonReader reader, Type objectType, Ordering existingValue, bool hasExistingValue, JsonSerializer serializer)
-            => (Ordering)(reader.Value as string);
+        public override void Write(Utf8JsonWriter writer, Ordering value, JsonSerializerOptions options) {
+            writer.WriteStringValue((string)value);
+        }
     }
 }

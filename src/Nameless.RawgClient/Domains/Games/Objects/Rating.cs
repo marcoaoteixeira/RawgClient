@@ -6,25 +6,25 @@
         /// <summary>
         /// Gets or init field "id".
         /// </summary>
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; init; }
 
         /// <summary>
         /// Gets or init field "title".
         /// </summary>
-        [JsonProperty("title")]
+        [JsonPropertyName("title")]
         public string Title { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "count".
         /// </summary>
-        [JsonProperty("count")]
+        [JsonPropertyName("count")]
         public int Count { get; init; }
 
         /// <summary>
         /// Gets or init field "percent".
         /// </summary>
-        [JsonProperty("percent")]
+        [JsonPropertyName("percent")]
         public double Percent { get; init; }
     }
 }

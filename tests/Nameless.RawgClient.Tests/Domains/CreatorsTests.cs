@@ -1,5 +1,4 @@
 ﻿using Nameless.RawgClient.Domains.Creators.Requests;
-using Nameless.RawgClient.Domains.Creators.Responses;
 
 namespace Nameless.RawgClient.Domains {
     public class CreatorsTests : TestClassBase {
@@ -13,9 +12,13 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetCreatorsResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
+
+                if (actual.Results.Length <= 0) {
+                    return;
+                }
 
                 var first = actual.Results.First();
                 Assert.That(first.Name, Is.Not.Empty);
@@ -34,9 +37,13 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetCreatorDetailsResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
+
+                if (actual.Results.Length <= 0) {
+                    return;
+                }
 
                 var first = actual.Results.First();
                 Assert.That(first.Id, Is.EqualTo(id));

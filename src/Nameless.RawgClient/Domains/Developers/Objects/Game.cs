@@ -8,7 +8,7 @@ namespace Nameless.RawgClient.Domains.Developers.Objects {
         /// <summary>
         /// Gets or init field "added".
         /// </summary>
-        [JsonProperty("added")]
+        [JsonPropertyName("added")]
         public int Added { get; init; }
     }
 }

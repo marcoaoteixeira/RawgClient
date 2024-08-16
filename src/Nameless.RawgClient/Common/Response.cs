@@ -1,22 +1,46 @@
 ﻿namespace Nameless.RawgClient.Common {
     /// <summary>
-    /// Defines a base response object.
+    /// RAWG response object.
     /// </summary>
-    public abstract record Response {
+    /// <typeparam name="TResult">Type of the response's <see cref="Results"/> field.</typeparam>
+    public sealed record Response<TResult>
+        where TResult : class {
         /// <summary>
-        /// Gets whether the request results was successful or not.
+        /// Gets whether the request results in success or not.
         /// If this is <c>false</c>, check property <see cref="Error"/> for more information.
         /// </summary>
-#if NET6_0_OR_GREATER
         [MemberNotNullWhen(returnValue: false, nameof(Error))]
-#endif
-        [JsonProperty("succeeded")]
+        [JsonPropertyName("succeeded")]
         public bool Succeeded => Error is null;
 
         /// <summary>
         /// Gets or init the error message.
         /// </summary>
-        [JsonProperty("error")]
+        [JsonPropertyName("error")]
         public string? Error { get; init; }
+
+        /// <summary>
+        /// Gets or init the results.
+        /// </summary>
+        [JsonPropertyName("results")]
+        public TResult[] Results { get; init; } = [];
+
+        /// <summary>
+        /// Gets or init the previous request object.
+        /// </summary>
+        [JsonPropertyName("previous")]
+        public Request<TResult>? Previous { get; init; }
+
+        /// <summary>
+        /// Gets or init the next request object.
+        /// </summary>
+        [JsonPropertyName("next")]
+        public Request<TResult>? Next { get; init; }
+
+        /// <summary>
+        /// Gets or init the count number of available results.
+        /// </summary>
+        [JsonPropertyName("count")]
+        public int Count { get; init; }
     }
 }

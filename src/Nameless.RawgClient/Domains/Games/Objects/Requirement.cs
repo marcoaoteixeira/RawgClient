@@ -6,13 +6,13 @@
         /// <summary>
         /// Gets or init field "minimum".
         /// </summary>
-        [JsonProperty("minimum")]
+        [JsonPropertyName("minimum")]
         public string Minimum { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "recommended".
         /// </summary>
-        [JsonProperty("recommended")]
+        [JsonPropertyName("recommended")]
         public string Recommended { get; init; } = string.Empty;
     }
 }

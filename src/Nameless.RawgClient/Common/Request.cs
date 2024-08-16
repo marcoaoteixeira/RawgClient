@@ -2,7 +2,7 @@
 
 namespace Nameless.RawgClient.Common {
     /// <summary>
-    /// Defines a base request object.
+    /// Defines the abstract structure for a request object.
     /// </summary>
     public abstract record Request {
         private const string PageNumberKey = "page";
@@ -12,19 +12,19 @@ namespace Nameless.RawgClient.Common {
         /// <summary>
         /// Gets or init the page number.
         /// </summary>
-        [JsonProperty(PageNumberKey)]
+        [JsonPropertyName(PageNumberKey)]
         public int? PageNumber { get; init; }
 
         /// <summary>
         /// Gets or init the page size.
         /// </summary>
-        [JsonProperty(PageSizeKey)]
+        [JsonPropertyName(PageSizeKey)]
         public int? PageSize { get; init; }
 
         /// <summary>
         /// Gets or init the ordering.
         /// </summary>
-        [JsonProperty(OrderingKey)]
+        [JsonPropertyName(OrderingKey)]
         public Ordering? Ordering { get; init; }
 
         /// <summary>
@@ -50,4 +50,11 @@ namespace Nameless.RawgClient.Common {
             return result;
         }
     }
+
+    /// <summary>
+    /// Generic version of <see cref="Request"/> object.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the result inside the response.</typeparam>
+    public abstract record Request<TResult> : Request
+        where TResult : class;
 }

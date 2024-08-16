@@ -8,25 +8,25 @@ namespace Nameless.RawgClient.Domains.Developers.Objects {
         /// <summary>
         /// Gets or init field "games_count".
         /// </summary>
-        [JsonProperty("games_count")]
+        [JsonPropertyName("games_count")]
         public int GamesCount { get; init; }
 
         /// <summary>
         /// Gets or init field "image_background".
         /// </summary>
-        [JsonProperty("image_background")]
+        [JsonPropertyName("image_background")]
         public string BackgroundImageUrl { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "description".
         /// </summary>
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string Description { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "games".
         /// </summary>
-        [JsonProperty("games")]
+        [JsonPropertyName("games")]
         public Game[] Games { get; init; } = [];
     }
 }

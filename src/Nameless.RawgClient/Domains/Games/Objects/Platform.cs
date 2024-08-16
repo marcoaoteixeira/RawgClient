@@ -8,31 +8,31 @@ namespace Nameless.RawgClient.Domains.Games.Objects {
         /// <summary>
         /// Gets or init field "games_count".
         /// </summary>
-        [JsonProperty("games_count")]
+        [JsonPropertyName("games_count")]
         public int GamesCount { get; init; }
 
         /// <summary>
         /// Gets or init field "image_background".
         /// </summary>
-        [JsonProperty("image_background")]
+        [JsonPropertyName("image_background")]
         public string BackgroundImageUrl { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "image".
         /// </summary>
-        [JsonProperty("image")]
+        [JsonPropertyName("image")]
         public string ImageUrl { get; init; } = string.Empty;
 
         /// <summary>
         /// Gets or init field "year_start".
         /// </summary>
-        [JsonProperty("year_start")]
-        public int YearStart { get; init; }
+        [JsonPropertyName("year_start")]
+        public int? YearStart { get; init; }
 
         /// <summary>
         /// Gets or init field "year_end".
         /// </summary>
-        [JsonProperty("year_end")]
-        public int YearEnd { get; init; }
+        [JsonPropertyName("year_end")]
+        public int? YearEnd { get; init; }
     }
 }

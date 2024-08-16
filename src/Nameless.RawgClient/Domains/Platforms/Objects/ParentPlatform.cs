@@ -8,7 +8,7 @@ namespace Nameless.RawgClient.Domains.Platforms.Objects {
         /// <summary>
         /// Gets or init field "platforms".
         /// </summary>
-        [JsonProperty("platforms")]
+        [JsonPropertyName("platforms")]
         public Platform[] Platforms { get; init; } = [];
     }
 }

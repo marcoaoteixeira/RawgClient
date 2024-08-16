@@ -6,31 +6,31 @@
         /// <summary>
         /// Gets or init field "released_at".
         /// </summary>
-        [JsonProperty("released_at")]
+        [JsonPropertyName("released_at")]
         public DateTimeOffset ReleasedAt { get; init; }
 
         /// <summary>
         /// Gets or init field "requirements".
         /// </summary>
-        [JsonProperty("requirements")]
+        [JsonPropertyName("requirements")]
         public Requirement? Requirements { get; init; }
 
         /// <summary>
         /// Gets or init field "requirements_en".
         /// </summary>
-        [JsonProperty("requirements_en")]
+        [JsonPropertyName("requirements_en")]
         public Requirement? RequirementsEn { get; init; }
 
         /// <summary>
         /// Gets or init field "requirements_ru".
         /// </summary>
-        [JsonProperty("requirements_ru")]
-        public Requirement? RequirementsRu{ get; init; }
+        [JsonPropertyName("requirements_ru")]
+        public Requirement? RequirementsRu { get; init; }
 
         /// <summary>
         /// Gets or init field "platform".
         /// </summary>
-        [JsonProperty("platform")]
+        [JsonPropertyName("platform")]
         public Platform? Platform { get; init; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Nameless.RawgClient.Domains.Platforms.Requests;
-using Nameless.RawgClient.Domains.Platforms.Responses;
 
 namespace Nameless.RawgClient.Domains {
     public class PlatformsTests : TestClassBase {
@@ -13,7 +12,7 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetPlatformsResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
 
@@ -34,9 +33,13 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetPlatformDetailsResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
+
+                if (actual.Results.Length <= 0) {
+                    return;
+                }
 
                 var first = actual.Results.First();
                 Assert.That(first.Id, Is.EqualTo(id));
@@ -56,9 +59,13 @@ namespace Nameless.RawgClient.Domains {
 
             // assert
             Assert.Multiple(() => {
-                Assert.That(actual, Is.InstanceOf<GetParentPlatformsResponse>());
+                Assert.That(actual, Is.Not.Null);
                 Assert.That(actual.Count, Is.GreaterThanOrEqualTo(1));
                 Assert.That(actual.Results, Is.Not.Empty);
+
+                if (actual.Results.Length <= 0) {
+                    return;
+                }
 
                 var first = actual.Results.First();
                 Assert.That(first.Id, Is.EqualTo(id));
