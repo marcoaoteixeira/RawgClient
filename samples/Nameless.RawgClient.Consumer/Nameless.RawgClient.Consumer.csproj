@@ -5,25 +5,27 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+
+		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="AppSettings.json" />
+		<None Remove="AppSettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="AppSettings.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="AppSettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-	  <PackageReference Include="NLog.Extensions.Logging" Version="5.3.12" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.3.12" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Nameless.RawgClient\Nameless.RawgClient.csproj" />
+		<ProjectReference Include="..\..\src\Nameless.RawgClient\Nameless.RawgClient.csproj" />
 	</ItemGroup>
 
 </Project>
