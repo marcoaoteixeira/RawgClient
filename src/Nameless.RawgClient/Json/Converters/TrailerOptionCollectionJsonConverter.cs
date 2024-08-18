@@ -1,6 +1,6 @@
 ﻿using Nameless.RawgClient.Objects;
 
-namespace Nameless.RawgClient.Infrastructure {
+namespace Nameless.RawgClient.Json.Converters {
     /// <summary>
     /// An implementation of <see cref="JsonConverter"/> for <see cref="TrailerOptionCollection"/>.
     /// </summary>

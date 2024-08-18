@@ -1,11 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using Nameless.RawgClient.Infrastructure;
 
 namespace Nameless.RawgClient.Objects {
     /// <summary>
     /// A <see cref="IReadOnlyCollection{T}"/> implementation for <see cref="TrailerOption"/>
     /// </summary>
-    [JsonConverter(typeof(TrailerOptionCollectionJsonConverter))]
     public sealed class TrailerOptionCollection : ReadOnlyCollection<TrailerOption> {
         /// <summary>
         /// Initializes a new instance of <see cref="TrailerOptionCollection"/>

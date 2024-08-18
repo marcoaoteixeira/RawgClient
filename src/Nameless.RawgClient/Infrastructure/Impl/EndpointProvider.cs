@@ -40,7 +40,7 @@ namespace Nameless.RawgClient.Infrastructure.Impl {
                 GetGameTrailersRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameTrailers, inner.Id),
                 GetGameTwitchStreamsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameTwitchStreams, inner.Id),
                 GetGameYouTubeChannelsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Games.GetGameYouTubeChannels, inner.Id),
-                
+
                 GetGenresRequest => Endpoints.Genres.GetGenres,
                 GetGenreDetailsRequest inner => string.Format(CultureInfo.CurrentCulture, Endpoints.Genres.GetGenreDetails, inner.Id),
 

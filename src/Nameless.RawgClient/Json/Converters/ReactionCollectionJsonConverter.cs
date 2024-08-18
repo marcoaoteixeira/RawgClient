@@ -1,12 +1,12 @@
 ﻿using Nameless.RawgClient.Objects;
 
-namespace Nameless.RawgClient.Infrastructure {
+namespace Nameless.RawgClient.Json.Converters {
     /// <summary>
     /// An implementation of <see cref="JsonConverter"/> for <see cref="ReactionCollection"/>.
     /// </summary>
     public sealed class ReactionCollectionJsonConverter : JsonConverter<ReactionCollection> {
         /// <inheritdoc />
-        public override ReactionCollection? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
+        public override ReactionCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
             if (reader.TokenType != JsonTokenType.StartObject) {
                 throw new JsonException("Invalid start object token.");
             }

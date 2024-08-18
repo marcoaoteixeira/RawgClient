@@ -14,9 +14,9 @@ namespace Nameless.RawgClient {
                 ? value
                 : null;
 
-        internal static TValue DeserializeWithFallback<TValue>(this JsonNode? self, Func<TValue> fallback)
+        internal static TValue DeserializeWithFallback<TValue>(this JsonNode? self, Func<TValue> fallback, JsonSerializerOptions? options = null)
             => self is not null
-                ? self.Deserialize<TValue>() ?? fallback()
+                ? self.Deserialize<TValue>(options) ?? fallback()
                 : fallback();
     }
 }

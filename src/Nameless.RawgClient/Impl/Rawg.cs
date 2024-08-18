@@ -1,6 +1,8 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.Diagnostics;
+using System.Text.Json.Nodes;
 using Nameless.RawgClient.Common;
 using Nameless.RawgClient.Infrastructure;
+using Nameless.RawgClient.Json.Converters;
 
 namespace Nameless.RawgClient.Impl {
     /// <summary>
@@ -14,15 +16,23 @@ namespace Nameless.RawgClient.Impl {
             options: null
         );
 
-        private static readonly Action<ILogger, string, Exception?> DebuggerLoggerHandler = LoggerMessage.Define<string>(
-            logLevel: LogLevel.Debug,
+        private static readonly Action<ILogger, string, long, Exception?> RunTimeLoggerHandler = LoggerMessage.Define<string, long>(
+            logLevel: LogLevel.Information,
             eventId: default,
-            formatString: "{Message}",
+            formatString: "Operation: {Operation} took {Time}ms",
             options: null
         );
 
         private static readonly JsonSerializerOptions SerializerOptions = new() {
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            Converters = {
+                new NullToDateTimeOffsetJsonConverter(),
+                new NullToDoubleJsonConverter(),
+                new NullToIntJsonConverter(),
+                new OrderingJsonConverter(),
+                new ReactionCollectionJsonConverter(),
+                new TrailerOptionCollectionJsonConverter(),
+            }
         };
 
         private readonly HttpClient _httpClient;
@@ -68,8 +78,14 @@ namespace Nameless.RawgClient.Impl {
             // Call RAWG API endpoint
             HttpResponseMessage? httpResponseMessage;
             try {
+                var sw = Stopwatch.StartNew();
+
                 httpResponseMessage = await _httpClient.GetAsync(requestUri, cancellationToken)
                                                        .ConfigureAwait(continueOnCapturedContext: false);
+
+                sw.Stop();
+
+                RunTimeLoggerHandler(_logger, "Call to RAWG API", sw.ElapsedMilliseconds, null);
             }
             catch (Exception ex) {
                 return CreateErrorResponse<TResult>("Call to RAWG API failed.", ex);
@@ -108,7 +124,7 @@ namespace Nameless.RawgClient.Impl {
             return json;
         }
 
-        private string CreateRequestUri(Uri baseUri, string endpoint, Request request) {
+        private static string CreateRequestUri(Uri baseUri, string endpoint, Request request) {
             var builder = new UriBuilder(baseUri) { Path = endpoint, };
             var queryString = HttpUtility.ParseQueryString(baseUri.Query);
             foreach (var queryParam in request.GetQueryParams()) {
@@ -118,11 +134,7 @@ namespace Nameless.RawgClient.Impl {
 
             builder.Query = queryString.ToString();
 
-            var result = builder.Uri.AbsoluteUri;
-
-            DebuggerLoggerHandler(_logger, $"Calling RAWG API URL: {result}", null);
-
-            return result;
+            return builder.Uri.AbsoluteUri;
         }
 
         private Response<TResult> CreateResponse<TResult>(JsonObject obj, Request<TResult> request)
@@ -157,7 +169,7 @@ namespace Nameless.RawgClient.Impl {
                     // If it contains the key "results", it means that this is a page of items.
                     // We'll leave count unchanged because the count value represents
                     // the total number of possible results for this query.
-                    results = resultsToken.DeserializeWithFallback<TResult[]>(fallback: () => []);
+                    results = resultsToken.DeserializeWithFallback<TResult[]>(fallback: () => [], options: SerializerOptions);
                 }
                 else {
                     // If it doesn't contain the key "results", it means it's just one item.

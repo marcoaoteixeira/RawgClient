@@ -22,7 +22,7 @@ namespace Nameless.RawgClient {
 
             self.AddKeyedSingleton<IEndpointProvider, EndpointProvider>(EndpointProviderKey);
 
-            self.AddScoped(provider => {
+            self.AddScoped<IRawg>(provider => {
                 var httpClient = provider.GetRequiredService<IHttpClientFactory>()
                                          .CreateClient(RawgKey);
                 var endpointProvider = provider.ResolveEndpointProvider();

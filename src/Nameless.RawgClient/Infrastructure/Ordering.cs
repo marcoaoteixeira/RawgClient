@@ -2,36 +2,46 @@
     /// <summary>
     /// Describes an ordering action.
     /// </summary>
-    /// <param name="OrderBy">Gets the name of the field used by the ordering parameter.</param>
+    /// <param name="OrderBy">The field that will be used to order the query.</param>
     /// <param name="Descending">Whether the direction of the ordering should be descending or not.</param>
-    [JsonConverter(typeof(OrderingJsonConverter))]
-    public readonly record struct Ordering(string OrderBy, bool Descending) {
+    public readonly record struct Ordering(OrderingOptions OrderBy, bool Descending) {
         private const string DescendingToken = "-";
 
         /// <summary>
         /// Whether a value is present for this ordering action.
         /// </summary>
-        public bool IsEmpty => string.IsNullOrWhiteSpace(OrderBy);
+        public bool IsEmpty => OrderBy == OrderingOptions.None;
 
         /// <summary>
-        /// Implicit converts a <see cref="Ordering"/> object into a <see cref="string"/>.
+        /// Retrieves the <see cref="string"/> representation for this ordering value.
         /// </summary>
-        /// <param name="ordering">The <see cref="Ordering"/> instance.</param>
-        public static implicit operator string(Ordering ordering)
-            => ordering.Descending ? $"{DescendingToken}{ordering.OrderBy}" : ordering.OrderBy;
+        /// <returns>A <see cref="string"/> representation for this ordering value</returns>
+        public string GetStringValue()
+            => OrderBy != OrderingOptions.None
+                ? $"{(Descending ? DescendingToken : string.Empty)}{OrderBy.GetDescription()}"
+                : string.Empty;
 
         /// <summary>
-        /// Implicit converts a <see cref="string"/> into a <see cref="Ordering"/> object.
+        /// Tries parse the <see cref="string"/> as an <see cref="Ordering"/> value.
         /// </summary>
-        /// <param name="value">The ordering string representation.</param>
-        public static implicit operator Ordering(string? value) {
+        /// <param name="value">The <see cref="string"/> value.</param>
+        /// <param name="ordering">The output <see cref="Ordering"/> value.</param>
+        /// <returns><c>true</c> if success; otherwise <c>false</c>.</returns>
+        public static bool TryParse(string? value, out Ordering ordering) {
+            ordering = new Ordering();
+
             if (string.IsNullOrWhiteSpace(value) || value == DescendingToken) {
-                return new Ordering();
+                return false;
             }
 
-            return value.StartsWith(DescendingToken, StringComparison.OrdinalIgnoreCase)
-                ? new Ordering(OrderBy: value[1..], Descending: true)
-                : new Ordering(OrderBy: value, Descending: false);
+            var isDescending = value.StartsWith(DescendingToken, StringComparison.CurrentCultureIgnoreCase);
+            var field = isDescending ? value[1..] : value;
+
+            if (Enum.TryParse<OrderingOptions>(field, ignoreCase: true, out var orderingOptions)) {
+                ordering = new Ordering(orderingOptions, isDescending);
+            }
+
+            return !ordering.IsEmpty;
         }
     }
 }

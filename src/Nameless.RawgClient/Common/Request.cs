@@ -23,7 +23,6 @@ namespace Nameless.RawgClient.Common {
 
         /// <summary>
         /// Gets or init field "ordering".
-        /// Available fields: name, released, added, created, updated, rating, metacritic.
         /// </summary>
         [JsonPropertyName(OrderingKey)]
         public Ordering? Ordering { get; init; }
@@ -45,7 +44,7 @@ namespace Nameless.RawgClient.Common {
 
             var ordering = Ordering.GetValueOrDefault();
             if (!ordering.IsEmpty) {
-                result[OrderingKey] = [(string)ordering];
+                result[OrderingKey] = [ordering.GetStringValue()];
             }
 
             return result;

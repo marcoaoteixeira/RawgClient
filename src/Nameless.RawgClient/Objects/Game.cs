@@ -1,4 +1,6 @@
-﻿namespace Nameless.RawgClient.Objects {
+﻿using Nameless.RawgClient.Infrastructure;
+
+namespace Nameless.RawgClient.Objects {
     /// <summary>
     /// Game object.
     /// </summary>
@@ -25,6 +27,7 @@
         /// Gets or init field "metacritic".
         /// </summary>
         [JsonPropertyName("metacritic")]
+        //[JsonConverter(typeof(NullToDefaultJsonConverter<int>))]
         public int MetacriticScore { get; init; }
 
         /// <summary>
