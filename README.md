@@ -38,6 +38,10 @@ If you don't like `Microsoft.Extensions.DependencyInjection` and wanna use anoth
     - `Nameless.RawgClient.Infrastructure.IEndpointProvider` (default implementation: `Nameless.RawgClient.Infrastructure.Impl.EndpointProvider`)
     - `Microsoft.Extensions.Logging.ILogger<IRawg>`
 
+Oh, there is a (static) class with all endpoints for RAWG API.
+
+- `Nameless.RawgClient.Common.Endpoints`
+
 ### Prerequisites
 
 No prerequisites.
