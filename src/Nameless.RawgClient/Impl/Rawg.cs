@@ -26,9 +26,9 @@ namespace Nameless.RawgClient.Impl {
         private static readonly JsonSerializerOptions SerializerOptions = new() {
             NumberHandling = JsonNumberHandling.AllowReadingFromString,
             Converters = {
-                new NullToDateTimeOffsetJsonConverter(),
-                new NullToDoubleJsonConverter(),
-                new NullToIntJsonConverter(),
+                new DateTimeOffsetJsonConverter(),
+                new DoubleJsonConverter(),
+                new IntJsonConverter(),
                 new OrderingJsonConverter(),
                 new ReactionCollectionJsonConverter(),
                 new TrailerOptionCollectionJsonConverter(),

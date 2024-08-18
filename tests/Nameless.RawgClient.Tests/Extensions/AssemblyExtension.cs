@@ -5,14 +5,17 @@ namespace Nameless.RawgClient {
         internal static string GetDirectoryPath(this Assembly self, params string[] combineWith) {
             var location = $"file://{self.Location}";
             var uri = new UriBuilder(location);
-            var path = Uri.UnescapeDataString(uri.Path);
-
-            var result = Path.GetDirectoryName(path)!;
-
-            return combineWith.Length > 0
-                ? Path.Combine(combineWith.Prepend(result)
+            var uriPath = Uri.UnescapeDataString(uri.Path);
+            var directoryPath = Path.GetDirectoryName(uriPath) ?? string.Empty;
+            var result = combineWith.Length > 0
+                ? Path.Combine(combineWith.Prepend(directoryPath)
                                           .ToArray())
-                : result;
+                : directoryPath;
+
+            // Circumvent cross-platform problem with paths.
+            var altDirectorySeparatorChar = OperatingSystem.IsWindows() ? '/' : '\\';
+
+            return result.Replace(altDirectorySeparatorChar, Path.DirectorySeparatorChar);
         }
     }
 }

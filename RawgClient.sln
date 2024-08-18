@@ -16,7 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{05DB33E5-37FD-4D57-8100-5883DCAE8F7B}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\release.yml = .github\workflows\release.yml
-		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+		.github\workflows\push-branches.yml = .github\workflows\push-branches.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{64A5750D-F9D8-47D1-9E8D-D3ABF55B17F1}"
