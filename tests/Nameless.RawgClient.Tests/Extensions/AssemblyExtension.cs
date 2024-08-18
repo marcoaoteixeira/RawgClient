@@ -6,14 +6,16 @@ namespace Nameless.RawgClient {
             var location = $"file://{self.Location}";
             var uri = new UriBuilder(location);
             var uriPath = Uri.UnescapeDataString(uri.Path);
-            var directoryPath = Path.GetDirectoryName(uriPath)!;
-
+            var directoryPath = Path.GetDirectoryName(uriPath) ?? string.Empty;
             var result = combineWith.Length > 0
                 ? Path.Combine(combineWith.Prepend(directoryPath)
                                           .ToArray())
                 : directoryPath;
 
-            return result.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            // Circumvent cross-platform problem with paths.
+            var altDirectorySeparatorChar = OperatingSystem.IsWindows() ? '/' : '\\';
+
+            return result.Replace(altDirectorySeparatorChar, Path.DirectorySeparatorChar);
         }
     }
 }
