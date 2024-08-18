@@ -1,6 +1,6 @@
 # RAWG Client for .NET
 
-A basic client for querying [RAWG](https://rawg.io) game database.
+A basic client to query [RAWG](https://rawg.io) game database.
 
 The main motive behind this client was because I was building a small microservices, as an exercise, (kind of [Blockbuster](https://en.wikipedia.org/wiki/Blockbuster_(retailer))) of a gaming rental store. And there were not a single client for this API. So, let's build one, why not?
 
