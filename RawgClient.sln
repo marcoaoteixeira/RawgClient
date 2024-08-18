@@ -15,8 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{EEC5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{05DB33E5-37FD-4D57-8100-5883DCAE8F7B}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\develop.yml = .github\workflows\develop.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{64A5750D-F9D8-47D1-9E8D-D3ABF55B17F1}"
@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{64A5750D-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{176E84AB-5E69-481D-BE1E-B9BAFF67E505}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.RawgClient.Consumer", "samples\Nameless.RawgClient.Consumer\Nameless.RawgClient.Consumer.csproj", "{89F3B176-F30A-4592-952D-BFAAD27AE65E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nameless.RawgClient.Consumer", "samples\Nameless.RawgClient.Consumer\Nameless.RawgClient.Consumer.csproj", "{89F3B176-F30A-4592-952D-BFAAD27AE65E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
