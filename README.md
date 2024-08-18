@@ -1,4 +1,4 @@
-# RAWG Client .NET
+# RAWG Client for .NET
 
 A basic client for querying [RAWG](https://rawg.io) game database.
 
