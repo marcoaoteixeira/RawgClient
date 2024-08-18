@@ -5,14 +5,15 @@ namespace Nameless.RawgClient {
         internal static string GetDirectoryPath(this Assembly self, params string[] combineWith) {
             var location = $"file://{self.Location}";
             var uri = new UriBuilder(location);
-            var path = Uri.UnescapeDataString(uri.Path);
+            var uriPath = Uri.UnescapeDataString(uri.Path);
+            var directoryPath = Path.GetDirectoryName(uriPath)!;
 
-            var result = Path.GetDirectoryName(path)!;
-
-            return combineWith.Length > 0
-                ? Path.Combine(combineWith.Prepend(result)
+            var result = combineWith.Length > 0
+                ? Path.Combine(combineWith.Prepend(directoryPath)
                                           .ToArray())
-                : result;
+                : directoryPath;
+
+            return result.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
         }
     }
 }
