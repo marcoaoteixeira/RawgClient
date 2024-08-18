@@ -1,9 +1,11 @@
 name: Development Cycle
 
 on:
-  pull_request:
-    types:
-      - ready_for_review
+  push:
+    branches:
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'proposal/**'
 
 env:
   CODE_COVERAGE_COBERTURA_FILE_PATH: "./code-coverage/**/coverage.cobertura.xml"
