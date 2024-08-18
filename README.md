@@ -48,7 +48,7 @@ No prerequisites.
 
 ## Usage
 
-Please, refeer to the sample in "sample" folder. I think it's a quite nice start.
+Please, refer to the sample in "sample" folder. I think it's a quite nice start.
 
 ## Additional documentation
 
