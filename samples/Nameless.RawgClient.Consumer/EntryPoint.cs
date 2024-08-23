@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Nameless.RawgClient.Options;
 using Nameless.RawgClient.Requests.Games;
 using NLog.Extensions.Logging;
 
@@ -19,9 +20,15 @@ namespace Nameless.RawgClient.Consumer {
                 configure.AddNLog(configuration);
             });
 
+            // add RawgOptions to configuration.
+            services.Configure<RawgOptions>(configuration.GetSection(nameof(RawgOptions)));
+
             // register IRawg service
             services.RegisterRawgClient(configure => {
-                configure.ApiKey = "YOUR_API_KEY";
+                // you can also skip the configuration part about
+                // and provide your API key this way.
+
+                //configure.ApiKey = "YOUR_API_KEY";
             });
 
             // build provider
